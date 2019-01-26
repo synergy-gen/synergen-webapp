@@ -5,6 +5,7 @@ import Register from './auth/register-control';
 import Profile from './home/profile';
 import Home from './home/home-control';
 import ProtectedRoute from './auth/protected-route';
+import Create from './create';
 
 class App extends React.Component {
     render() {
@@ -15,8 +16,11 @@ class App extends React.Component {
                         <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />
                         <Route path="/profile" component={Profile} />
-                        <ProtectedRoute path="/home" component={Home} />
-                        <Redirect to="/home" />
+                        <Route path="" component={Create} />
+                        {
+                            //<ProtectedRoute path="/home" component={Home} />
+                            //<Redirect to="/home" />
+                        }
                     </Switch>
                 </div>
             </Router>
