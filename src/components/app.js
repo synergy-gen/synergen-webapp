@@ -4,8 +4,8 @@ import Login from './auth/login-control';
 import Register from './auth/register-control';
 import Profile from './profile/profile-control';
 import ProfileSettings from './home/profile';
-import Home from './home/home-control';
 import ProtectedRoute from './auth/protected-route';
+import Create from './create';
 
 class App extends React.Component {
     render() {
@@ -16,9 +16,9 @@ class App extends React.Component {
                         <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />
                         <Route path="/profile/settings" component={ProfileSettings} />
-                        <ProtectedRoute path="/home" component={Home} />
                         <ProtectedRoute path="/profile" component={Profile} />
-                        <Redirect to="/home" />
+                        <ProtectedRoute path="/profile/create" component={Create} />
+                        <Redirect to="/profile" />
                     </Switch>
                 </div>
             </Router>
