@@ -1,0 +1,6 @@
+{
+    "api": {
+        "version": "v1",
+        "host": "localhost:8484"
+    }
+}

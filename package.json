@@ -1,0 +1,46 @@
+{
+  "name": "synergen-webclient",
+  "version": "1.0.0",
+  "description": "Simple template for bootstraping development environment for ReactJS app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node node_modules/.bin/webpack-dev-server --mode development --open --hot",
+    "build": "node node_modules/.bin/webpack --config webpack.prod.js --mode production",
+    "serve": "cd dist/ && node ../node_modules/.bin/ws --spa ./index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradenhc/react-template.git"
+  },
+  "author": "Braden Hitchcock <developer.hitchcock@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bradenhc/react-template/issues"
+  },
+  "homepage": "https://github.com/bradenhc/react-template#readme",
+  "dependencies": {
+    "@bradenhc/client-config": "^1.1.0",
+    "@material-ui/core": "^3.7.1",
+    "@material-ui/icons": "^3.0.1",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-redux": "^6.0.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.1",
+    "styled-components": "^4.1.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "copy-webpack-plugin": "^4.6.0",
+    "html-webpack-plugin": "^3.2.0",
+    "local-web-server": "^2.6.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
+  }
+}

@@ -1,0 +1,4 @@
+node_modules/
+dist/
+src/assets/config/local*.json
+.DS_Store
