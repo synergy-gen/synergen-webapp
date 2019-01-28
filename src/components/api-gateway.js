@@ -4,7 +4,6 @@ class ApiGateway {
     constructor() {
         this.baseUrl = null;
         this.initialized = false;
-        this.token = null;
     }
 
     init(cb) {
@@ -32,10 +31,6 @@ class ApiGateway {
         this._request('DELETE', path, null, cb);
     }
 
-    setToken(token) {
-        this.token = token;
-    }
-
     _request(method, path, data, cb) {
         if (!this.initialized) {
             this.init(err => {
@@ -53,9 +48,9 @@ class ApiGateway {
             method,
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            credentials: 'include'
         };
-        if (this.token) options.headers['Authorization'] = `bearer ${this.token}`;
         if (data) options.body = JSON.stringify(data);
         fetch(this.baseUrl + path, options)
             .then(res => {

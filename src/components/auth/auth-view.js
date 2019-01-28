@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 function AuthView({
     classes,
     action,
+    error,
     onLoginFormSubmit,
     onNameChange,
     onEmailChange,
@@ -29,10 +30,18 @@ function AuthView({
         <main className={classes.main}>
             <CssBaseline />
             <Paper className={classes.paper}>
+            <Typography variant="h4">S Y N E R G E N</Typography>
                 <Avatar className={classes.avatar}>{action === 'login' ? <LockIcon /> : <AssignmentIcon />}</Avatar>
                 <Typography component="h1" variant="h5">
                     {action === 'login' ? 'Sign In' : 'Register'}
                 </Typography>
+                {error ? (
+                    <Typography className={classes.errorMessage} color="error">
+                        {error}
+                    </Typography>
+                ) : (
+                    ''
+                )}
                 <form className={classes.form} onSubmit={onLoginFormSubmit}>
                     {action === 'register' ? (
                         <React.Fragment>
@@ -74,12 +83,6 @@ function AuthView({
                             autoComplete="current-password"
                         />
                     </FormControl>
-                    {/* TODO: implement remember me*/}
-                    {action === 'login' ? (
-                        <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
-                    ) : (
-                        ''
-                    )}
                     <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                         {action === 'login' ? 'Sign In' : 'Register'}
                     </Button>
