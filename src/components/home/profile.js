@@ -160,7 +160,7 @@ const ProfileSection = ({}) =>
     </StyledProfileSection>
 
 
-export default class Profile extends React.Component {
+export default class ProfileSettings extends React.Component {
     constructor(){
         super();
     }

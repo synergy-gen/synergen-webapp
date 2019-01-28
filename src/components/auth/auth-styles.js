@@ -1,5 +1,8 @@
 export default function styles(theme) {
     return {
+        errorMessage: {
+            paddingTop: `${theme.spacing.unit * 1}px`
+        },
         main: {
             width: 'auto',
             display: 'block', // Fix IE 11 issue.
