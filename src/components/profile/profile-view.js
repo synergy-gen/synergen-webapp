@@ -21,18 +21,22 @@ class ProfileView extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, user } = this.props;
         return (
             <React.Fragment>
                 <Grid container justify="center" alignItems="center" spacing={8}>
                     <Grid item container justify="center" alignItems="center" xs={12}>
-                        <Avatar className={classes.avatar} alt="User Name">
+                        <Avatar
+                            className={classes.avatar}
+                            alt="User Name"
+                            src={user.image ? user.image : '/assets/img/no-avatar.png'}
+                        >
                             UN
                         </Avatar>
                     </Grid>
                     <Grid item container direction="column" justify="center" alignItems="center" xs={12}>
-                        <Typography variant="h3">User Name</Typography>
-                        <Typography variant="subheading">Slogan or really cool quote</Typography>
+                        <Typography variant="h3">{user.name}</Typography>
+                        <Typography variant="subheading">{user.slogan || 'Welcome to Synergen!'}</Typography>
                     </Grid>
                     <Grid item container justify="center" alignItems="center" xs={12}>
                         <Button variant="contained" color="primary">

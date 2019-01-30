@@ -3,12 +3,14 @@ import api from '../api-gateway';
 class AuthController {
     constructor() {
         this.isAuthenticated = false;
+        this.user = null;
     }
 
     authenticate(username, password, cb) {
         api.put('/auth', { username, password }, (err, res) => {
             if (err) return cb(err);
             this.isAuthenticated = true;
+            this.user = res.content.user;
             return cb(null, res);
         });
     }

@@ -68,7 +68,7 @@ class RootView extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer}>
-                    <Hidden smUp implementation="css">
+                    <Hidden lgUp implementation="css">
                         <Drawer
                             classes={{
                                 paper: classes.drawerPaper
@@ -81,7 +81,7 @@ class RootView extends React.Component {
                             <Menu />
                         </Drawer>
                     </Hidden>
-                    <Hidden xsDown implementation="css">
+                    <Hidden mdDown implementation="css">
                         <Drawer
                             classes={{
                                 paper: classes.drawerPaper
@@ -101,7 +101,7 @@ class RootView extends React.Component {
                     </Switch>
                 </div>
                 <div className={classes.drawer}>
-                    <Hidden smUp implementation="css">
+                    <Hidden lgUp implementation="css">
                         <Drawer
                             classes={{
                                 paper: classes.drawerPaper
@@ -114,7 +114,7 @@ class RootView extends React.Component {
                             <Tasklist />
                         </Drawer>
                     </Hidden>
-                    <Hidden xsDown implementation="css">
+                    <Hidden mdDown implementation="css">
                         <Drawer
                             classes={{
                                 paper: classes.drawerPaper
