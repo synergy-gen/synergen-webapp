@@ -35,8 +35,12 @@ class ProfileView extends React.Component {
                         </Avatar>
                     </Grid>
                     <Grid item container direction="column" justify="center" alignItems="center" xs={12}>
-                        <Typography variant="h3">{user.name}</Typography>
-                        <Typography variant="subheading">{user.slogan || 'Welcome to Synergen!'}</Typography>
+                        <Typography variant="h3" align="center">
+                            {user.name}
+                        </Typography>
+                        <Typography variant="subheading" align="center">
+                            {user.slogan || 'Welcome to Synergen!'}
+                        </Typography>
                     </Grid>
                     <Grid item container justify="center" alignItems="center" xs={12}>
                         <Button variant="contained" color="primary">

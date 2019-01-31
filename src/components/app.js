@@ -14,7 +14,7 @@ class App extends React.Component {
                         <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />
                         <ProtectedRoute path="/app" component={Root} />
-                        <Redirect to="/app/profile" />
+                        <Redirect to="/login" />
                     </Switch>
                 </div>
             </Router>

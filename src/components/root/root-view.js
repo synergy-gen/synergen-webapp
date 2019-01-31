@@ -2,21 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Switch } from 'react-router-dom';
-import {
-    AppBar,
-    Toolbar,
-    IconButton,
-    Typography,
-    Drawer,
-    CssBaseline,
-    Hidden
-} from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, Drawer, CssBaseline, Hidden } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import styles from './root-styles';
 import Menu from '../menu/menu-control';
 import Tasklist from '../tasklist/tasklist-control';
 import Profile from '../profile/profile-control';
+import Explore from '../explore/explore-control';
 import ProtectedRoute from '../auth/protected-route';
 
 class RootView extends React.Component {
@@ -31,7 +24,7 @@ class RootView extends React.Component {
         this.handleTasklistToggle = this.handleTasklistToggle.bind(this);
     }
 
-    handleMenuToggle(event) {
+    handleMenuToggle() {
         this.setState({ menuOpen: !this.state.menuOpen });
     }
 
@@ -54,7 +47,7 @@ class RootView extends React.Component {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" color="inherit" className={classes.logo}>
+                        <Typography variant="h6" color="inherit" className={classes.logo} align="center">
                             S Y N E R G E N
                         </Typography>
                         <IconButton
@@ -78,7 +71,7 @@ class RootView extends React.Component {
                             open={this.state.menuOpen}
                             onClose={this.handleMenuToggle}
                         >
-                            <Menu />
+                            <Menu onLinkSelect={this.handleMenuToggle} />
                         </Drawer>
                     </Hidden>
                     <Hidden mdDown implementation="css">
@@ -95,9 +88,10 @@ class RootView extends React.Component {
                     </Hidden>
                 </nav>
                 <div className={classes.mainContent}>
-                <div className={classes.toolbar} />
+                    <div className={classes.toolbar} />
                     <Switch>
                         <ProtectedRoute path={`${match.path}/profile`} component={Profile} />
+                        <ProtectedRoute path={`${match.path}/explore`} component={Explore} />
                     </Switch>
                 </div>
                 <div className={classes.drawer}>
