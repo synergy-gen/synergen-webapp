@@ -9,7 +9,8 @@ class Login extends React.Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            error: null
         };
 
         this.onLoginFormSubmit = this.onLoginFormSubmit.bind(this);
@@ -29,8 +30,11 @@ class Login extends React.Component {
         event.stopPropagation();
         event.preventDefault();
         AuthControl.authenticate(this.state.username, this.state.password, (err, res) => {
-            if (err) return console.log(err.message);
-            this.props.history.push('/home');
+            if (err) {
+                return this.setState({ error: err.message });
+            }
+            this.setState({ error: null });
+            this.props.history.push('/app/profile');
         });
     }
 
@@ -38,6 +42,7 @@ class Login extends React.Component {
         return (
             <AuthView
                 action={'login'}
+                error={this.state.error}
                 onLoginFormSubmit={this.onLoginFormSubmit}
                 onUsernameChange={this.onUsernameChange}
                 onPasswordChange={this.onPasswordChange}
