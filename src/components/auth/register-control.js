@@ -46,7 +46,7 @@ class RegisterController extends React.Component {
                 return this.setState({ error: err.message });
             }
             this.setState({ error: null });
-            this.props.history.push('/profile');
+            this.props.history.push('/app/profile');
         });
     }
 

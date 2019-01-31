@@ -15,7 +15,7 @@ class ProfileSummaryView extends React.Component {
         const { classes, data } = this.props;
 
         const SummaryCard = ({ data }) => (
-            <Grid item xs={12} sm={12} lg={4}>
+            <Grid item xs={12} sm={6} md={6} lg={4}>
                 <Card className={classes.summaryCard}>
                     <CardHeader
                         avatar={<CircularProgress variant="static" value={data.completed} />}
