@@ -47,7 +47,32 @@ const TitleField = styled(TextField)`
 
 const CreateButton = styled(Button)`
     width: 200px;
+    margin-top: 20px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+`
+
+const AddButton = styled(Button)`
+    width: 100%;
     margin-top: 8px !important;
+`
+
+const AddTitleField = styled(TextField)`
+    width:100%;
+`
+
+const StyledFieldSet = styled.fieldset`
+    display: flex;
+    width: 100%;
+    position: relative;
+    padding: 5px;
+    box-sizing: border-box;
+`
+
+const StyledLegend = styled.legend`
+    font-family: sans-serif;
+    display: flex;
+    position: relative
 `
 
 export default class Create extends React.Component {
@@ -62,7 +87,10 @@ export default class Create extends React.Component {
             goal:{
                 title:"",
                 details:"",
-                tasks: []
+                //tasks: [{title:"asdasdjnaksjdbiausdhgiasugdiasugdiausgdiauasgd", details:"adjnakjsbdajsbasd aidoians oiashdoiahsodih asoidhoaishdoaish asdoiahodiahsd aoishdoaishdoi aoihdoaishdoih doasubadasj dasdasdasdsidboasidbaosbd dakjsbdakjsbd"}],
+                tasks:[],
+                currentTitle: "",
+                currentDetails: ""
             }
         }
     }
@@ -95,6 +123,38 @@ export default class Create extends React.Component {
         newState.task.details="";
         
         this.setState({newState})
+    }
+
+    onTaskAdd(){
+        let newState = this.state;
+        newState.goal.tasks.push({
+            title: newState.goal.currentTitle,
+            details: newState.goal.currentDetails
+        });
+        newState.goal.currentDetails="";
+        newState.goal.currentTitle="";
+        this.setState({...newState});
+    }
+
+    removeTask(key){
+        let newState = this.state;
+        newState.goal.tasks = newState.goal.tasks.filter((_, index)=>{
+            return index!==key
+        });
+        this.setState({...newState})
+
+    }
+    
+    goalTaskTitleChange(title){
+        let newState = this.state;
+        newState.goal.currentTitle = title;
+        this.setState({...newState});
+    }
+
+    goalTaskDetailsChange(details){
+        let newState = this.state;
+        newState.goal.currentDetails = details;
+        this.setState({...newState});
     }
 
     render(){
@@ -134,7 +194,7 @@ export default class Create extends React.Component {
                     <React.Fragment>
                         <EntityDetails state={this.state.goal} titleChange={(val)=>this.handleGoalTitleChange(val)} 
                         detailsChange={(val)=>this.handleGoalDetailsChange(val)}/>
-                        <TaskTable tasks={this.state.goal.tasks}/>
+                        <TaskTable tasks={this.state.goal.tasks} currentTitle={this.state.goal.currentTitle} currentDetails={this.state.goal.currentDetails} onTitleChange={(title)=>{this.goalTaskTitleChange(title)}} onDetailsChange={(details)=>{this.goalTaskDetailsChange(details)}} addTask={()=>this.onTaskAdd()} removeTask={(key)=>this.removeTask(key)}/>
                         <CreateButton variant="contained" color="primary" className={""}>Create</CreateButton>
                     </React.Fragment>
                 }
@@ -171,39 +231,100 @@ const EntityDetails = ({state, titleChange, detailsChange})=>{
     </React.Fragment>)
 }
 
-const HeaderRow = styled.tr``
+const HeaderRow = styled.div`
+    display: flex;
+    flex-direction: row;
+`
 
-const Header = styled.th``
+const Header = styled.div`
+    font-family: sans-serif;
+    display: flex;
+    flex-basis: 50%;
+    padding: 5px;
+    align-items: center;
+`
 
-const TableRow = styled.tr``
+const TableRow = styled.div`
+    display: flex;
+    flex-direction: row;
+`
 
-const TableCell = styled.td``
+const TableCell = styled.div`
+    display: flex;
+    text-align: center;
+    font-family: sans-serif;
+    color: #222;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 5px;
+    align-items: center;
+    overflow: hidden;
+`
+const StyledTable = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: relative;
+`
 
-const TaskTable = ({tasks}) => {
+
+const TaskTable = ({tasks, currentTitle, currentDetails, onTitleChange, onDetailsChange, addTask, removeTask}) => {
     return (
-    <table>
-        <tbody>
+    <StyledFieldSet>
+        <StyledLegend>Tasks</StyledLegend>
+        <StyledTable>
             <HeaderRow>
-                <Header>
-                    {"Title"}
-                </Header>
-                <Header>
-                    {"Description"}
-                </Header>
+                {tasks.length>0 && 
+                    <React.Fragment>
+                        <Header>
+                            {"Title"}
+                        </Header>
+                        <Header>
+                            {"Description"}
+                        </Header>
+                    </React.Fragment>
+                }
             </HeaderRow>
             {
                 tasks.map((element, key)=>{
-                    return <TableRow>
-                        <TableCell>
+                    return <TableRow key={key}>
+                        <TableCell style={{flexBasis: "50%", maxWidth:"50%"}}>
                             {element.title}
                         </TableCell>
-                        <TableCell>
+                        <TableCell style={{flexBasis: "40%", maxWidth:"40%"}}>
                             {element.details}
+                        </TableCell>
+                        <TableCell style={{flexBasis: "10%"}}>
+                            <AddButton onClick={()=>removeTask(key)} variant="contained" color="primary" className={""}>-</AddButton>
                         </TableCell>
                     </TableRow>
                 })
             }
-        </tbody>
-    </table>
+            <TableRow>
+                <TableCell style={{flexBasis: "50%"}}>
+                    <AddTitleField
+                        id="outlined-name"
+                        label="Title"
+                        className={""}
+                        value={currentTitle}
+                        onChange={(e)=>{onTitleChange(e.target.value)}}
+                        margin="normal"
+                        variant="outlined"
+                    />
+                </TableCell>
+                <TableCell style={{flexBasis: "50%"}}>
+                    <AddTitleField
+                        id="outlined-name"
+                        label="Description"
+                        className={""}
+                        value={currentDetails}
+                        onChange={(e)=>{onDetailsChange(e.target.value)}}
+                        margin="normal"
+                        variant="outlined"
+                    />
+                </TableCell>
+            </TableRow>
+        </StyledTable>
+        <AddButton variant="contained" color="primary" onClick={()=>addTask()} className={""}>+</AddButton>
+    </StyledFieldSet>
     )
 }
