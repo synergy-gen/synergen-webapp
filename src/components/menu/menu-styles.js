@@ -4,5 +4,9 @@ export default theme => ({
     },
     logoutIcon: {
         transform: 'rotate(180deg)'
+    },
+    active: {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText + ' !important'
     }
 });

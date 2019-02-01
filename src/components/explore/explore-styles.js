@@ -20,7 +20,8 @@ export default theme => ({
         padding: 10
     },
     goalTile: {
-        margin: 10
+        margin: 10,
+        width: 280
     },
     buttonAdoptGoal: {
         marginLeft: 'auto'

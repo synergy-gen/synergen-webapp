@@ -9,27 +9,33 @@ class Tasklist extends React.Component {
         this.state = {
             tasks: [
                 {
-                    id: "id1",
-                    title: "Task Title",
-                    description: "Task Description"
+                    id: 'id1',
+                    title: 'Task Title',
+                    description: 'Task Description'
                 },
                 {
-                    id: "id2",
-                    title: "Task Title",
-                    description: "Task Description"
+                    id: 'id2',
+                    title: 'Task Title',
+                    description: 'Task Description'
                 },
                 {
-                    id: "id3",
-                    title: "Task Title",
-                    description: "Task Description"
+                    id: 'id3',
+                    title: 'Task Title',
+                    description: 'Task Description'
                 }
             ]
-        }
+        };
+        this.state.tasks = [];
 
+        this.onTaskClear = this.onTaskClear.bind(this);
     }
 
-    render(){
-        return <TasklistView tasks={this.state.tasks} />;
+    onTaskClear(id) {
+        console.log(id);
+    }
+
+    render() {
+        return <TasklistView tasks={this.state.tasks} onTaskClear={this.onTaskClear} />;
     }
 }
 

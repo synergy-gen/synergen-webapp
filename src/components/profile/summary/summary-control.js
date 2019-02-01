@@ -10,23 +10,23 @@ class ProfileSummary extends React.Component {
             data: [
                 {
                     id: 'id1',
-                    title: 'Goal Title',
-                    description: 'A great goal description',
-                    creator: 'My Name',
+                    title: 'Get Out More',
+                    description: 'Working on being more social and having more fun in the world with my friends',
+                    creator: 'John Smith',
                     completed: 75
                 },
                 {
                     id: 'id2',
-                    title: 'Goal Title',
-                    description: 'A great goal description',
-                    creator: 'My Name',
+                    title: 'Unplug',
+                    description: 'Take time to unplug from the rest of the world and spend more quality, quiet time with yourself and others',
+                    creator: 'Sean Williamson',
                     completed: 75
                 },
                 {
                     id: 'id3',
-                    title: 'Goal Title',
-                    description: 'A great goal description',
-                    creator: 'My Name',
+                    title: 'Stay Fit',
+                    description: 'Key things to do every day so that I can stay healthier',
+                    creator: 'John Smith',
                     completed: 75
                 }
             ]

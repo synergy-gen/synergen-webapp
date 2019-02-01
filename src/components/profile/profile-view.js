@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Typography, Avatar, Grid, Button, FormControl, Select, MenuItem, OutlinedInput } from '@material-ui/core';
 import styles from './profile-styles';
 import ProfileSummary from './summary/summary-control';
+import { Link } from 'react-router-dom';
 
 class ProfileView extends React.Component {
     constructor(props) {
@@ -41,9 +42,11 @@ class ProfileView extends React.Component {
                         </Typography>
                     </Grid>
                     <Grid item container justify="center" alignItems="center" xs={12}>
-                        <Button variant="contained" color="secondary">
-                            Create
-                        </Button>
+                        <Link className={classes.link} to="/app/create">
+                            <Button variant="contained" color="secondary">
+                                Create
+                            </Button>
+                        </Link>
                     </Grid>
                 </Grid>
                 <Grid className={classes.viewSelectContainer} container justify="center" alignItems="center">

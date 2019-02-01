@@ -16,6 +16,9 @@ export default theme => {
         },
         selectInput: {
             color: theme.palette.primary.contrastText
+        },
+        link: {
+            textDecoration: 'none'
         }
     };
 };

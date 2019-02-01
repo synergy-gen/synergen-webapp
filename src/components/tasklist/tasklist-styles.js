@@ -22,5 +22,10 @@ export default theme => ({
     },
     toolbar: {
         ...theme.mixins.toolbar
+    },
+    chip: {
+        margin: 4,
+        display: 'flex',
+        justifyContent: 'space-between'
     }
 });

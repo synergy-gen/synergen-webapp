@@ -9,30 +9,31 @@ export default class ExploreControl extends React.Component {
             goals: [
                 {
                     id: 'id1',
-                    title: 'Test Goal',
-                    description: 'A great description about the goal',
-                    creator: 'Braden Hitchcock'
+                    title: 'Unplug',
+                    description:
+                        'Take time to unplug from the rest of the world and spend more quality, quiet time with yourself and others',
+                    creator: 'Sean Williamson'
                 },
                 {
                     id: 'id2',
-                    title: 'Test Goal',
-                    description: 'A great description about the goal',
-                    creator: 'Braden Hitchcock'
+                    title: 'The First Button',
+                    description: 'Improve your productivity in the morning with these simple steps',
+                    creator: 'John White'
                 },
                 {
                     id: 'id3',
-                    title: 'Test Goal',
-                    description: 'A great description about the goal',
-                    creator: 'Braden Hitchcock'
+                    title: 'Nourishment',
+                    description: 'Start healthy habbits and watch your attitude about life soar to new heights',
+                    creator: 'Elizabeth Stout'
                 },
                 {
                     id: 'id4',
-                    title: 'Test Goal',
-                    description: 'A great description about the goal',
-                    creator: 'Braden Hitchcock'
+                    title: 'A Grateful Heart',
+                    description: 'Take time every day to increase how much gratitude you feel for what you have',
+                    creator: 'Elizabeth Stout'
                 }
             ]
-        }
+        };
 
         this.onSearchSubmit = this.onSearchSubmit.bind(this);
     }

@@ -31,10 +31,14 @@ class MenuView extends React.Component {
 
     render() {
         const { classes, onLinkSelect } = this.props;
-
         const ExploreLink = ({ item }) => (
             <Link className={classes.link} to={item.link}>
-                <ListItem button key={item.title} onClick={onLinkSelect}>
+                <ListItem
+                    button
+                    className={window.location.href.indexOf(item.link) > 0 ? classes.active : ''}
+                    key={item.title}
+                    onClick={onLinkSelect}
+                >
                     <ListItemIcon>{item.icon}</ListItemIcon>
                     <ListItemText key={item.title} primary={item.title} />
                 </ListItem>
