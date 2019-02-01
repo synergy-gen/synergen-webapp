@@ -30,9 +30,7 @@ class ProfileView extends React.Component {
                             className={classes.avatar}
                             alt="User Name"
                             src={user.image ? user.image : '/assets/img/no-avatar.png'}
-                        >
-                            UN
-                        </Avatar>
+                        />
                     </Grid>
                     <Grid item container direction="column" justify="center" alignItems="center" xs={12}>
                         <Typography variant="h3" align="center">

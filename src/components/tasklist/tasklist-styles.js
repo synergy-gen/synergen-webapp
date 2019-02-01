@@ -5,9 +5,13 @@ export default theme => ({
     taskTile: {
         padding: 6,
         margin: 5,
+        marginRight: 8,
         backgroundColor: theme.palette.background.default,
         display: 'flex',
         alignItems: 'center'
+    },
+    darkText: {
+        color: theme.palette.primary.contrastText
     },
     taskTileText: {
         display: 'flex',

@@ -12,6 +12,16 @@ class Tasklist extends React.Component {
                     id: "id1",
                     title: "Task Title",
                     description: "Task Description"
+                },
+                {
+                    id: "id2",
+                    title: "Task Title",
+                    description: "Task Description"
+                },
+                {
+                    id: "id3",
+                    title: "Task Title",
+                    description: "Task Description"
                 }
             ]
         }
