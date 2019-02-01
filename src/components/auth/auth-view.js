@@ -89,13 +89,13 @@ function AuthView({
                     {action === 'login' ? (
                         <div className={classes.register}>
                             <Typography>
-                                Don't have an account? <Link to="/register">Register</Link>
+                                Don't have an account? <Link to="/register" className={classes.link}>Register</Link>
                             </Typography>
                         </div>
                     ) : (
                         <div className={classes.register}>
                             <Typography>
-                                Already have an account? <Link to="/login">Sign in</Link>
+                                Already have an account? <Link to="/login" className={classes.link}>Sign in</Link>
                             </Typography>
                         </div>
                     )}

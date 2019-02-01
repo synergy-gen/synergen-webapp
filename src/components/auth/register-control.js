@@ -15,6 +15,8 @@ class RegisterController extends React.Component {
             error: null
         };
 
+        console.log(AuthControl.isAuthenticated);
+
         this.onNameChange = this.onNameChange.bind(this);
         this.onEmailChange = this.onEmailChange.bind(this);
         this.onUsernameChange = this.onUsernameChange.bind(this);

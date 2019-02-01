@@ -1,7 +1,8 @@
 import React from 'react';
 import AuthView from './auth-view';
 import AuthControl from './auth-control';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Login extends React.Component {
     constructor(properties) {
@@ -10,12 +11,25 @@ class Login extends React.Component {
         this.state = {
             username: '',
             password: '',
-            error: null
+            error: null,
+            loggedIn: AuthControl.isAuthenticated
         };
 
         this.onLoginFormSubmit = this.onLoginFormSubmit.bind(this);
         this.onUsernameChange = this.onUsernameChange.bind(this);
         this.onPasswordChange = this.onPasswordChange.bind(this);
+    }
+
+    componentDidMount() {
+        if (AuthControl.isAuthenticated == null) {
+            AuthControl.verify((err, user) => {
+                if (err) {
+                    this.setState({ loggedIn: false });
+                } else {
+                    this.setState({ loggedIn: true });
+                }
+            });
+        }
     }
 
     onUsernameChange(event) {
@@ -39,6 +53,25 @@ class Login extends React.Component {
     }
 
     render() {
+        if (this.state.loggedIn == null) {
+            return (
+                <div
+                    style={{
+                        height: '100vh',
+                        width: '100vw',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <CircularProgress style={{ width: 200, height: 200 }} color="primary" />
+                </div>
+            );
+        }
+        if (this.state.loggedIn) {
+            return <Redirect to="/app/profile" />;
+        }
+
         return (
             <AuthView
                 action={'login'}
