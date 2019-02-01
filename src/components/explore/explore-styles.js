@@ -18,5 +18,11 @@ export default theme => ({
     },
     iconButton: {
         padding: 10
+    },
+    goalTile: {
+        margin: 10
+    },
+    buttonAdoptGoal: {
+        marginLeft: 'auto'
     }
 });

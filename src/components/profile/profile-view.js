@@ -43,7 +43,7 @@ class ProfileView extends React.Component {
                         </Typography>
                     </Grid>
                     <Grid item container justify="center" alignItems="center" xs={12}>
-                        <Button variant="contained" color="primary">
+                        <Button variant="contained" color="secondary">
                             Create
                         </Button>
                     </Grid>
@@ -54,6 +54,9 @@ class ProfileView extends React.Component {
                             value={this.state.view}
                             onChange={this.handleChange}
                             className={classes.viewSelect}
+                            classes={{
+                                select: classes.selectInput
+                            }}
                             input={<OutlinedInput name="view" labelWidth={0} />}
                         >
                             <MenuItem value="overview">Overview</MenuItem>

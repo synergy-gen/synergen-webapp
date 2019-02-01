@@ -2,8 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './explore-styles';
-import { Paper, InputBase, IconButton, Grid } from '@material-ui/core';
+import { Paper, InputBase, IconButton, Grid, Card, CardHeader, CardActions, CardMedia, CardContent, Typography, Button } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+
+const GoalTile = ({classes, goal}) => (
+    <Card className={classes.goalTile}>
+        <CardHeader title={goal.title} subheader={goal.creator} />
+        <CardMedia className={classes.goalCardImage} />
+        <CardContent>
+            <Typography>
+                {goal.description}
+            </Typography>
+        </CardContent>
+        <CardActions>
+            <Button className={classes.buttonAdoptGoal}>Adopt</Button>
+        </CardActions>
+    </Card>
+);
 
 class ExploreView extends React.Component {
     constructor(props) {
@@ -46,14 +61,22 @@ class ExploreView extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, goals } = this.props;
 
         return (
-            <Grid container justify="center" className={classes.searchContainer}>
-                <Grid item>
-                    <form onSubmit={this.handleSearch}>{this.renderSearchBar()}</form>
+            <React.Fragment>
+                <Grid container justify="center" className={classes.searchContainer}>
+                    <Grid item>
+                        <form onSubmit={this.handleSearch}>{this.renderSearchBar()}</form>
+                    </Grid>
                 </Grid>
-            </Grid>
+                <Grid container justify="center">
+                    { goals.map(goal => (
+                        <GoalTile key={goal.id} classes={classes} goal={goal} />
+                    ))}
+                </Grid>
+            </React.Fragment>
+            
         );
     }
 }

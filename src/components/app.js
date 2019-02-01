@@ -4,20 +4,35 @@ import Root from './root/root-view';
 import Login from './auth/login-control';
 import Register from './auth/register-control';
 import ProtectedRoute from './auth/protected-route';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+    palette: {
+        type: 'dark',
+        primary: {
+            main: '#fbc02d',
+        },
+        secondary: {
+            main: '#18ffff'
+        }
+    }
+});
 
 class App extends React.Component {
     render() {
         return (
-            <Router>
-                <div>
-                    <Switch>
-                        <Route path="/login" component={Login} />
-                        <Route path="/register" component={Register} />
-                        <ProtectedRoute path="/app" component={Root} />
-                        <Redirect to="/login" />
-                    </Switch>
-                </div>
-            </Router>
+            <MuiThemeProvider theme={theme}>
+                <Router>
+                    <div>
+                        <Switch>
+                            <Route path="/login" component={Login} />
+                            <Route path="/register" component={Register} />
+                            <ProtectedRoute path="/app" component={Root} />
+                            <Redirect to="/login" />
+                        </Switch>
+                    </div>
+                </Router>
+            </MuiThemeProvider>
         );
     }
 }

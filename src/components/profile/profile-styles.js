@@ -1,6 +1,3 @@
-const drawerWidth = 240;
-const menuToggleBreakpoint = 'lg';
-
 export default theme => {
     console.log(theme);
     return {
@@ -15,8 +12,10 @@ export default theme => {
         },
         viewSelect: {
             textAlign: 'center',
-            backgroundColor: 'white',
             borderRadius: theme.shape.borderRadius
+        },
+        selectInput: {
+            color: theme.palette.primary.contrastText
         }
     };
 };
