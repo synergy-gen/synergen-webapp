@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import { Divider, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
-//import ExitIcon from '@material-ui/icons/ExitToApp';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ExitIcon from '@material-ui/icons/ExitToApp';
 
 class MenuView extends React.Component {
     constructor(props) {
@@ -15,7 +16,13 @@ class MenuView extends React.Component {
         this.state = {
             menuItems: [
                 { title: 'Profile', link: this.props.rootPath + '/profile', icon: <PersonIcon /> },
-                { title: 'Explore', link: this.props.rootPath + '/explore', icon: <SearchIcon /> }
+                { title: 'Explore', link: this.props.rootPath + '/explore', icon: <SearchIcon /> },
+                { title: 'Settings', link: this.props.rootPath + '/settings', icon: <SettingsIcon /> },
+                {
+                    title: 'Logout',
+                    link: '/logout',
+                    icon: <ExitIcon style={{ transform: 'rotate(180deg)' }} />
+                }
                 //{ title: 'Supporting', link: '' },
                 //{ title: 'Groups', link: '' }
             ]
