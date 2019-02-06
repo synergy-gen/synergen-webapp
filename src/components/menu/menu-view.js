@@ -9,29 +9,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 
-class MenuView extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            menuItems: [
-                { title: 'Profile', link: this.props.rootPath + '/profile', icon: <PersonIcon /> },
-                { title: 'Explore', link: this.props.rootPath + '/explore', icon: <SearchIcon /> },
-                { title: 'Settings', link: this.props.rootPath + '/settings', icon: <SettingsIcon /> },
-                {
-                    title: 'Logout',
-                    link: '/logout',
-                    icon: <ExitIcon style={{ transform: 'rotate(180deg)' }} />
-                }
-                //{ title: 'Supporting', link: '' },
-                //{ title: 'Groups', link: '' }
-            ]
-        };
-    }
-
-    render() {
-        const { classes, onLinkSelect } = this.props;
-        const ExploreLink = ({ item }) => (
+const ExploreLink = ({ classes, item, onLinkSelect }) => (
+    <React.Fragment>
+        {item.link ? (
             <Link className={classes.link} to={item.link}>
                 <ListItem
                     button
@@ -43,15 +23,48 @@ class MenuView extends React.Component {
                     <ListItemText key={item.title} primary={item.title} />
                 </ListItem>
             </Link>
-        );
+        ) : (
+            <ListItem
+                button
+                className={window.location.href.indexOf(item.link) > 0 ? classes.active : ''}
+                key={item.title}
+                onClick={item.action}
+            >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText key={item.title} primary={item.title} />
+            </ListItem>
+        )}
+    </React.Fragment>
+);
+
+class MenuView extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.menuItems = [
+            { title: 'Profile', link: this.props.match.url + '/profile', icon: <PersonIcon /> },
+            { title: 'Explore', link: this.props.match.url + '/explore', icon: <SearchIcon /> },
+            { title: 'Settings', link: this.props.match.url + '/settings', icon: <SettingsIcon /> },
+            {
+                title: 'Logout',
+                action: this.props.onLogout,
+                icon: <ExitIcon style={{ transform: 'rotate(180deg)' }} />
+            }
+            //{ title: 'Supporting', link: '' },
+            //{ title: 'Groups', link: '' }
+        ];
+    }
+
+    render() {
+        const { classes, onLinkSelect } = this.props;
 
         return (
             <React.Fragment>
                 <div />
                 <Divider />
                 <List>
-                    {this.state.menuItems.map(item => (
-                        <ExploreLink key={item.title} item={item} />
+                    {this.menuItems.map(item => (
+                        <ExploreLink key={item.title} classes={classes} item={item} onLinkSelect={onLinkSelect} />
                     ))}
                 </List>
             </React.Fragment>

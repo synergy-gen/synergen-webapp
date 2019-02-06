@@ -53,15 +53,20 @@ class ApiGateway {
         };
         if (data) options.body = JSON.stringify(data);
         fetch(this.baseUrl + path, options)
-            .then(res => {
-                success = res.ok;
-                return res.json();
-            })
-            .then(data => {
-                if (!success) return cb(data);
-                cb(null, data);
-            })
-            .catch(err => cb(err, null));
+            .then(
+                res => {
+                    success = res.ok;
+                    return res.json();
+                },
+                err => cb(err, null)
+            )
+            .then(
+                data => {
+                    if (!success) return cb(data);
+                    cb(null, data);
+                },
+                err => cb(err, null)
+            );
     }
 }
 

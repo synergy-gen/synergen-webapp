@@ -2,17 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './explore-styles';
-import { Paper, InputBase, IconButton, Grid, Card, CardHeader, CardActions, CardMedia, CardContent, Typography, Button } from '@material-ui/core';
+import {
+    Paper,
+    InputBase,
+    IconButton,
+    Grid,
+    Card,
+    CardHeader,
+    CardActions,
+    CardMedia,
+    CardContent,
+    Typography,
+    Button
+} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-const GoalTile = ({classes, goal}) => (
+const GoalTile = ({ classes, goal }) => (
     <Card className={classes.goalTile}>
         <CardHeader title={goal.title} subheader={goal.creator} />
         <CardMedia className={classes.goalCardImage} />
         <CardContent>
-            <Typography>
-                {goal.description}
-            </Typography>
+            <Typography>{goal.description}</Typography>
         </CardContent>
         <CardActions>
             <Button className={classes.buttonAdoptGoal}>Adopt</Button>
@@ -39,7 +49,7 @@ class ExploreView extends React.Component {
 
     handleSearch(event) {
         event.preventDefault();
-        this.props.onSearchSubmit(this.state.search);
+        this.props.searchForGoals(this.state.search).catch(console.log);
         return false;
     }
 
@@ -71,12 +81,11 @@ class ExploreView extends React.Component {
                     </Grid>
                 </Grid>
                 <Grid container justify="center">
-                    { goals.map(goal => (
+                    {Array.from(Object.values(goals)).map(goal => (
                         <GoalTile key={goal.id} classes={classes} goal={goal} />
                     ))}
                 </Grid>
             </React.Fragment>
-            
         );
     }
 }

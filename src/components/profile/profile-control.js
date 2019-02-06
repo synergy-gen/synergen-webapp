@@ -1,16 +1,17 @@
-import React from 'react';
 import ProfileView from './profile-view';
-import { withRouter } from 'react-router-dom';
-import AuthControl from '../auth/auth-control';
+import { connect } from 'react-redux';
+import { setVisibleGoal } from '../../actions';
 
-class Profile extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    };
+};
 
-    render() {
-        return <ProfileView user={AuthControl.user} />;
-    }
-}
+const mapDispatchToProps = dispatch => {
+    return {
+        onGoalSelect: id => dispatch(setVisibleGoal(id))
+    };
+};
 
-export default withRouter(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileView);

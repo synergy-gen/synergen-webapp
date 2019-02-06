@@ -1,19 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import MenuView from './menu-view';
 import { withRouter } from 'react-router-dom';
+import { logout } from '../../actions';
 
-class Menu extends React.Component {
-    constructor(props) {
-        super(props);
-        
-    }
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    onLogout: () => dispatch(logout()),
+    onLinkSelect: ownProps.onLinkSelect
+});
 
-    render() {
-        const { match, onLinkSelect } = this.props;
-        console.log(match);
-        return <MenuView rootPath={match.url} onLinkSelect={onLinkSelect} />;
-    }
-}
-
-export default withRouter(Menu);
+export default connect(
+    null,
+    mapDispatchToProps
+)(withRouter(MenuView));

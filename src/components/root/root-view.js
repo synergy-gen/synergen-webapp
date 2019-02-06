@@ -10,7 +10,7 @@ import Menu from '../menu/menu-control';
 import Tasklist from '../tasklist/tasklist-control';
 import Profile from '../profile/profile-control';
 import Explore from '../explore/explore-control';
-import Create from '../create/index';
+import Create from '../create/create-control';
 import ProtectedRoute from '../auth/protected-route';
 
 class RootView extends React.Component {
