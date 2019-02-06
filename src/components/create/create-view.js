@@ -27,6 +27,7 @@ const EntityDetails = ({ state, titleChange, detailsChange }) => {
     return (
         <React.Fragment>
             <TitleField
+                required={true}
                 id="outlined-name"
                 label="Title"
                 className={''}
@@ -38,6 +39,7 @@ const EntityDetails = ({ state, titleChange, detailsChange }) => {
                 variant="outlined"
             />
             <TextField
+                required={true}
                 id="outlined-multiline-flexible"
                 label="Details"
                 multiline
@@ -127,7 +129,7 @@ class Create extends React.Component {
     constructor() {
         super();
         this.state = {
-            entity: 'task',
+            entity: 'goal',
             task: {
                 title: '',
                 details: ''
@@ -140,6 +142,8 @@ class Create extends React.Component {
                 currentDetails: ''
             }
         };
+
+        this.onFormSubmit = this.onFormSubmit.bind(this);
     }
 
     handleEntityChange(value) {
@@ -159,7 +163,7 @@ class Create extends React.Component {
     }
 
     handleGoalDetailsChange(value) {
-        this.setState({ goal: { ...this.state.goal, title: value } });
+        this.setState({ goal: { ...this.state.goal, details: value } });
     }
 
     onTaskCreate(task) {
@@ -204,7 +208,19 @@ class Create extends React.Component {
 
     onFormSubmit(e) {
         e.preventDefault();
-        this.props.onGoalCreate(this.state.goal).catch(console.log);
+        switch (this.state.entity) {
+            case 'goal':
+                let goal = {
+                    title: this.state.goal.title,
+                    description: this.state.goal.details,
+                    tasks: this.state.goal.tasks,
+                    creator: this.props.userId
+                }
+                this.props.onCreateGoal(goal).then(() => {
+                    this.props.history.push('/app/profile');
+                }).catch(console.log);
+                break;
+        }
         return false;
     }
 
@@ -214,10 +230,13 @@ class Create extends React.Component {
             <StyledCreate>
                 <div className={classes.topBar}>
                     <CreateTarget>
-                        <Typography variant="title" style={{ color: 'rgba(0, 0, 0, 0.87)', marginRight: 10 }}>
-                            Create
+                        <Typography
+                            variant="title"
+                            style={{ color: 'rgba(0, 0, 0, 0.87)', marginRight: 10, padding: '10px' }}
+                        >
+                            Create Goal
                         </Typography>
-                        <StyledFormControl className={''}>
+                        {/*<StyledFormControl className={''}>
                             <Select
                                 value={this.state.entity}
                                 onChange={e => {
@@ -232,12 +251,11 @@ class Create extends React.Component {
                             >
                                 <MenuItem value="task">Task</MenuItem>
                                 <MenuItem value="goal">Goal</MenuItem>
-                                {/*<MenuItem value="objective">Objective</MenuItem>*/}
                             </Select>
-                        </StyledFormControl>
+                        </StyledFormControl> */}
                     </CreateTarget>
                 </div>
-                <div className={classes.content}>
+                <form className={classes.content} onSubmit={this.onFormSubmit}>
                     {this.state.entity === 'task' && (
                         <React.Fragment>
                             <EntityDetails
@@ -282,7 +300,7 @@ class Create extends React.Component {
                             </CreateButton>
                         </React.Fragment>
                     )}
-                </div>
+                </form>
             </StyledCreate>
         );
     }

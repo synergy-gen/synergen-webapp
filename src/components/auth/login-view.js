@@ -47,7 +47,7 @@ class LoginView extends React.Component {
     render() {
         const { classes, error, loggedIn } = this.props;
 
-        if (loggedIn) {
+        if (loggedIn == true) {
             return <Redirect to="/app/profile" />;
         }
 

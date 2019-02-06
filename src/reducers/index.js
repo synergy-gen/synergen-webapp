@@ -60,10 +60,10 @@ export default function synergen(state = initialState, action) {
         case CREATE_GOAL_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: false,
-                user: {
-                    ...state.user,
-                    goals: [].concat(state.user.goals, [action.goal])
-                }
+                // TODO: right now the API is returning the entire user when we post to the user's goals resource. 
+                // Once we update it to only return the created goal, we will need to change this reducer and the action
+                // associated with it
+                user: action.user
             });
         case CREATE_GOAL_FAILURE:
             return Object.assign({}, state, { isFetching: false, error: action.error });

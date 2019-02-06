@@ -138,8 +138,8 @@ function createGoalRequest() {
 }
 
 export const CREATE_GOAL_SUCCESS = 'CREATE_GOAL_SUCCESS';
-function createGoalSuccess(goal) {
-    return { type: CREATE_GOAL_SUCCESS, goal };
+function createGoalSuccess(user) {
+    return { type: CREATE_GOAL_SUCCESS, user };
 }
 
 export const CREATE_GOAL_FAILURE = 'CREATE_GOAL_FAILURE';
@@ -148,14 +148,14 @@ function createGoalFailure(error) {
 }
 
 export function createGoal(goal) {
-    return function(dispatch, getState) {
+    return function(dispatch) {
         dispatch(createGoalRequest());
 
         return new Promise((resolve, reject) => {
             // If it is a public goal, then we need to post it to the public goals, otherwise just add it to the
             // user
             if (goal.public) {
-                api.post('/goals', { goal }, (err, res) => {
+                api.post('/goals', goal , (err, res) => {
                     if (err) {
                         dispatch(createGoalFailure(err.message));
                         return reject(err);
@@ -166,8 +166,7 @@ export function createGoal(goal) {
                     return resolve(res);
                 });
             } else {
-                let uid = getState().user.id;
-                api.post(`/users/${uid}/goals`, { goal }, (err, res) => {
+                api.post(`/users/${goal.creator}/goals`, goal , (err, res) => {
                     if (err) {
                         dispatch(createGoalFailure(err.message));
                         return reject(err);
