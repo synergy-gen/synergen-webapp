@@ -110,7 +110,6 @@ class LoginView extends React.Component {
                                 name="username"
                                 autoComplete="username"
                                 onChange={this.handleChange}
-                                autoFocus={true}
                             />
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>

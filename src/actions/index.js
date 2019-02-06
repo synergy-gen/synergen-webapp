@@ -91,8 +91,9 @@ export function registerUser(name, email, username, password) {
                     dispatch(registerUserFailure(err.message));
                     return reject(err);
                 }
+                // If we succeeded, we also need to authenticate
                 dispatch(registerUserSuccess(res.content));
-                return resolve(res);
+                dispatch(authenticateUser(username, password)).then(resolve, reject);
             });
         });
     };
@@ -155,7 +156,7 @@ export function createGoal(goal) {
             // If it is a public goal, then we need to post it to the public goals, otherwise just add it to the
             // user
             if (goal.public) {
-                api.post('/goals', goal , (err, res) => {
+                api.post('/goals', goal, (err, res) => {
                     if (err) {
                         dispatch(createGoalFailure(err.message));
                         return reject(err);
@@ -166,7 +167,7 @@ export function createGoal(goal) {
                     return resolve(res);
                 });
             } else {
-                api.post(`/users/${goal.creator}/goals`, goal , (err, res) => {
+                api.post(`/users/${goal.creator}/goals`, goal, (err, res) => {
                     if (err) {
                         dispatch(createGoalFailure(err.message));
                         return reject(err);
