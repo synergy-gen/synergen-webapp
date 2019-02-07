@@ -26,7 +26,7 @@ export default function synergen(state = initialState, action) {
         case USER_AUTH_REQUEST:
             return Object.assign({}, state, { isFetching: true });
         case USER_AUTH_SUCCESS:
-            return Object.assign({}, state, { authenticated: true, user: action.user, isFetching: false });
+            return Object.assign({}, state, { authenticated: true, user: action.user, isFetching: false, error: null });
         case USER_AUTH_FAILURE:
             return Object.assign({}, state, { authenticated: false, isFetching: false, error: action.error });
 
@@ -34,7 +34,7 @@ export default function synergen(state = initialState, action) {
         case VERIFY_USER_AUTH_REQUEST:
             return Object.assign({}, state, { isFetching: true });
         case VERIFY_USER_AUTH_SUCCESS:
-            return Object.assign({}, state, { authenticated: true, user: action.user, isFetching: false });
+            return Object.assign({}, state, { authenticated: true, user: action.user, isFetching: false, error: null });
         case VERIFY_USER_AUTH_FAILURE:
             return Object.assign({}, state, { authenticated: false, isFetching: false });
 
@@ -42,7 +42,7 @@ export default function synergen(state = initialState, action) {
         case REGISTER_USER_REQUEST:
             return Object.assign({}, state, { isFetching: true });
         case REGISTER_USER_SUCCESS:
-            return Object.assign({}, state, { user: action.user, isFetching: false });
+            return Object.assign({}, state, { user: action.user, isFetching: false, error: null });
         case REGISTER_USER_FAILURE:
             return Object.assign({}, state, { isFetching: false, error: action.error });
 
@@ -50,7 +50,7 @@ export default function synergen(state = initialState, action) {
         case USER_INFO_REQUEST:
             return Object.assign({}, state, { isFetching: true });
         case USER_INFO_SUCCESS:
-            return Object.assign({}, state, { isFetching: false, user: action.user });
+            return Object.assign({}, state, { isFetching: false, user: action.user, error: null });
         case USER_INFO_FAILURE:
             return Object.assign({}, state, { isFetching: false, error: action.error });
 
@@ -63,7 +63,8 @@ export default function synergen(state = initialState, action) {
                 // TODO: right now the API is returning the entire user when we post to the user's goals resource. 
                 // Once we update it to only return the created goal, we will need to change this reducer and the action
                 // associated with it
-                user: action.user
+                user: action.user,
+                error: null
             });
         case CREATE_GOAL_FAILURE:
             return Object.assign({}, state, { isFetching: false, error: action.error });
@@ -72,7 +73,7 @@ export default function synergen(state = initialState, action) {
         case LOGOUT_REQUEST:
             return Object.assign({}, state, { isFetching: true });
         case LOGOUT_SUCCESS:
-            return Object.assign({}, state, { authenticated: false, isFetching: false });
+            return Object.assign({}, state, { authenticated: false, isFetching: false, error: null });
         case LOGOUT_FAILURE:
             return Object.assign({}, state, { isFetching: false, error: action.error });
 
