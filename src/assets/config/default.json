@@ -1,5 +1,6 @@
 {
     "api": {
+        "scheme": "http",
         "version": "v1",
         "host": "localhost:8585"
     }
