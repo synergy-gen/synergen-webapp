@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/bradenhc/react-template/issues"
   },
-  "homepage": "https://github.com/bradenhc/react-template#readme",
+  "homepage": "https://synergen.us/client",
   "dependencies": {
     "@bradenhc/client-config": "^1.1.0",
     "@material-ui/core": "^3.7.1",
