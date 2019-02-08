@@ -21,7 +21,7 @@ const config = {
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: './src/index.html' }),
+        new HtmlWebpackPlugin({ template: './src/index.html', baseUrl: '/client/' }),
         new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }])
     ]
 };

@@ -24,7 +24,7 @@ const config = {
         historyApiFallback: true
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: './src/index.html' }),
+        new HtmlWebpackPlugin({ template: './src/index.html', baseUrl: '' }),
         new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }])
     ]
 };
