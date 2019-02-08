@@ -20,9 +20,6 @@ const config = {
             }
         ]
     },
-    devServer: {
-        historyApiFallback: true
-    },
     plugins: [
         new HtmlWebpackPlugin({ template: './src/index.html' }),
         new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }])

@@ -22,7 +22,7 @@ class App extends React.Component {
     render() {
         return (
             <MuiThemeProvider theme={theme}>
-                <Router>
+                <Router basename="/client">
                     <div>
                         <Switch>
                             <Route path="/login" component={Login} />
