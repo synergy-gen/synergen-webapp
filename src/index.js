@@ -8,7 +8,7 @@ import reducer from './reducers';
 import App from './components/app';
 import config from '@bradenhc/client-config';
 
-config.files(['/assets/config/default.json', '/assets/config/local.json']);
+config.files(['assets/config/default.json', 'assets/config/local.json']);
 
 const loggerMiddleware = createLogger();
 
