@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './summary-styles';
+import { Link } from 'react-router-dom';
 import { Grid, Card, CardHeader, CardContent, Typography, Button, CircularProgress } from '@material-ui/core';
 
 class ProfileSummaryView extends React.Component {
@@ -21,7 +22,11 @@ class ProfileSummaryView extends React.Component {
                         avatar={<CircularProgress variant="static" value={data.completed} />}
                         title={<Typography variant="h6">{data.title}</Typography>}
                         subheader={data.creator}
-                        action={<Button>View Details</Button>}
+                        action={
+                            <Link className={classes.link} to={`/app/view/${data.id}`}>
+                                <Button>View Details</Button>
+                            </Link>
+                        }
                     />
                     <CardContent>
                         <Typography>{data.description}</Typography>
@@ -32,7 +37,7 @@ class ProfileSummaryView extends React.Component {
 
         return (
             <Grid container spacing={8}>
-                {Array.from(Object.values(data)).map(d => (
+                {data.map(d => (
                     <SummaryCard key={d.id} data={d} />
                 ))}
             </Grid>

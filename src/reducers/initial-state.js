@@ -6,13 +6,13 @@ export default {
         name: '',
         email: '',
         slogan: '',
-        goals: {}
+        goals: []
     },
     explore: {
         query: '',
-        results: {}
+        results: []
     },
-    visibleGoal: null,
+    goals: {},
     error: null,
     isFetching: false
 };

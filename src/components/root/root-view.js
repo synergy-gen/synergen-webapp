@@ -11,6 +11,7 @@ import Tasklist from '../tasklist/tasklist-control';
 import Profile from '../profile/profile-control';
 import Explore from '../explore/explore-control';
 import Create from '../create/create-control';
+import View from '../view/view-control';
 import ProtectedRoute from '../auth/protected-route';
 
 class RootView extends React.Component {
@@ -94,6 +95,7 @@ class RootView extends React.Component {
                         <ProtectedRoute path={`${match.path}/profile`} component={Profile} />
                         <ProtectedRoute path={`${match.path}/explore`} component={Explore} />
                         <ProtectedRoute path={`${match.path}/create`} component={Create} />
+                        <ProtectedRoute path={`${match.path}/view/:goalId`} component={View} />
                     </Switch>
                 </div>
                 <div className={classes.drawer}>
