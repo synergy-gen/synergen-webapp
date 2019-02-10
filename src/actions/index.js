@@ -149,8 +149,12 @@ function createGoalFailure(error) {
 }
 
 export function createGoal(goal) {
-    return function(dispatch) {
+    return function(dispatch, getState) {
         dispatch(createGoalRequest());
+
+        // The created goal needs additional information from the state before we create it. We can add that here.
+        let state = getState();
+        goal.creator = state.user.id;
 
         return new Promise((resolve, reject) => {
             // If it is a public goal, then we need to post it to the public goals, otherwise just add it to the
