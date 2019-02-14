@@ -99,9 +99,12 @@ export default function synergen(state = initialState, action) {
                 // Once we update it to only return the created goal, we will need to change this reducer and the action
                 // associated with it
                 user: Object.assign({}, state.user, {
-                    goals: userGoals(state.user.goals, action.user)
+                    goals: [...state.user.goals, action.goal.id]
                 }),
-                goals: goals(state.goals, action.user),
+                goals: {
+                    ...this.state.goals,
+                    [goal.id]: goal
+                },
                 error: null
             });
         case CREATE_GOAL_FAILURE:

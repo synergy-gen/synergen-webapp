@@ -139,8 +139,8 @@ function createGoalRequest() {
 }
 
 export const CREATE_GOAL_SUCCESS = 'CREATE_GOAL_SUCCESS';
-function createGoalSuccess(user) {
-    return { type: CREATE_GOAL_SUCCESS, user };
+function createGoalSuccess(goal) {
+    return { type: CREATE_GOAL_SUCCESS, goal };
 }
 
 export const CREATE_GOAL_FAILURE = 'CREATE_GOAL_FAILURE';

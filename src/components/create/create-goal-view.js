@@ -121,14 +121,18 @@ class CreateGoalView extends React.Component {
         if (e.key === 'Enter') {
             e.preventDefault();
             e.stopPropagation();
-            this.setState({
-                tags: {
-                    ...this.state.tags,
-                    [this.state.nextTag]: this.state.currentTag
-                },
-                currentTag: '',
-                nextTag: ++this.state.nextTag
-            });
+            if (!Array.from(Object.values(this.state.tags)).includes(this.state.currentTag)) {
+                this.setState({
+                    tags: {
+                        ...this.state.tags,
+                        [this.state.nextTag]: this.state.currentTag
+                    },
+                    currentTag: '',
+                    nextTag: ++this.state.nextTag
+                });
+            } else {
+                this.setState({ currentTag: '' });
+            }
         }
     }
 
@@ -140,15 +144,12 @@ class CreateGoalView extends React.Component {
 
     onCreateGoalSubmit(e) {
         e.preventDefault();
-        let seenTags = [];
-        let goal = Object.assign({}, this.state, {
+        let goal = {
+            title: this.state.title,
+            description: this.state.description,
             tasks: Array.from(Object.values(this.state.tasks)).filter(t => t !== ''),
-            tags: Array.from(Object.values(this.state.tags)).filter(t => {
-                if (seenTags.indexOf(t) > 0) return false;
-                seenTags.push(t);
-                return true;
-            })
-        });
+            tags: Array.from(Object.values(this.state.tags))
+        };
         this.props.onCreateGoal(goal);
         return false;
     }
