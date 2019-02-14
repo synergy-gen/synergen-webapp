@@ -4,6 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from './view-styles';
 import { Typography, Table, TableBody, TableRow, TableCell } from '@material-ui/core';
 
+const TaskRow = ({ classes, task }) => (
+    <TableRow>
+        <TableCell>{task.details}</TableCell>
+    </TableRow>
+);
+
 class ViewView extends React.Component {
     constructor(props) {
         super(props);
@@ -21,9 +27,7 @@ class ViewView extends React.Component {
                 <Table>
                     <TableBody>
                         {goal.tasks.map(t => (
-                            <TableRow>
-                                <TableCell>{t.details}</TableCell>
-                            </TableRow>
+                            <TaskRow key={t.id} task={t} />
                         ))}
                     </TableBody>
                 </Table>

@@ -37,7 +37,7 @@ class ProfileView extends React.Component {
                         <Typography variant="h3" align="center">
                             {user.name}
                         </Typography>
-                        <Typography variant="subheading" align="center">
+                        <Typography variant="subtitle1" align="center">
                             {user.slogan || 'Welcome to Synergen!'}
                         </Typography>
                     </Grid>

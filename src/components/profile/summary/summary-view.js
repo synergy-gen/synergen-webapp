@@ -19,7 +19,7 @@ class ProfileSummaryView extends React.Component {
             <Grid item xs={12} sm={6} md={6} lg={4}>
                 <Card className={classes.summaryCard}>
                     <CardHeader
-                        avatar={<CircularProgress variant="static" value={data.completed} />}
+                        avatar={ data.completed ? <CircularProgress variant="static" value={data.completed} /> : ''}
                         title={<Typography variant="h6">{data.title}</Typography>}
                         subheader={data.creator}
                         action={
