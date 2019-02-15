@@ -50,7 +50,7 @@ class ProfileView extends React.Component {
                     </Grid>
                 </Grid>
                 <Grid className={classes.viewSelectContainer} container justify="center" alignItems="center">
-                    <FormControl variant="outlined">
+                    { /*<FormControl variant="outlined">
                         <Select
                             value={this.state.view}
                             onChange={this.handleChange}
@@ -65,7 +65,8 @@ class ProfileView extends React.Component {
                             <MenuItem value="objectives">Objectives</MenuItem>
                             <MenuItem value="groups">Groups</MenuItem>
                         </Select>
-                    </FormControl>
+                        </FormControl> */ }
+                        <Typography variant="h6" color="inherit">Overview</Typography>
                 </Grid>
                 <ProfileSummary />
             </React.Fragment>
