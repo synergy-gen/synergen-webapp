@@ -102,7 +102,7 @@ export default function synergen(state = initialState, action) {
                 }),
                 goals: {
                     ...state.goals,
-                    [goal.id]: goal
+                    [action.goal.id]: action.goal
                 },
                 error: null
             });

@@ -169,6 +169,7 @@ class CreateGoalView extends React.Component {
                             name="title"
                             value={this.state.title}
                             onChange={this.handleChange}
+                            autoFocus={this.state.title === ''}
                         />
                     </Grid>
                     <Grid className={classes.gridItem} item xs={12}>
@@ -207,7 +208,7 @@ class CreateGoalView extends React.Component {
                                 name={pair[0]}
                                 value={pair[1]}
                                 numTasks={this.state.numTasks}
-                                autoFocus={index + 1 === arr.length}
+                                autoFocus={this.state.title !== '' && index + 1 === arr.length}
                                 onChange={this.handleTaskDetailsChange}
                                 onKeyPress={this.handleTaskDetailsKeyPress}
                                 onDelete={() => this.onDeleteTask(pair[0])}
