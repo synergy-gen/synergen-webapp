@@ -23,7 +23,7 @@ class ViewView extends React.Component {
                 <Typography variant="h4">{goal.title}</Typography>
                 <Typography variant="h5">{goal.description}</Typography>
                 <Typography>Created by: {goal.creator}</Typography>
-                <Typography variant="title">Tasks</Typography>
+                <Typography variant="h6">Tasks</Typography>
                 <Table>
                     <TableBody>
                         {goal.tasks.map(t => (

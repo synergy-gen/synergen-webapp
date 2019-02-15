@@ -26,7 +26,7 @@ export function authenticateUser(username, password) {
                     dispatch(userAuthFailure(err.message));
                     return reject(err);
                 }
-                dispatch(userAuthSuccess(res.content.user));
+                dispatch(userAuthSuccess(res.content));
                 return resolve(res);
             });
         });
@@ -58,7 +58,7 @@ export function verifyUserIsAuthenticated() {
                     dispatch(verifyUserAuthFailure());
                     return reject(err);
                 }
-                dispatch(verifyUserAuthSuccess(res.content.user));
+                dispatch(verifyUserAuthSuccess(res.content));
                 return resolve(res);
             });
         });

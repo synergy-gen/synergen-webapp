@@ -19,7 +19,6 @@ import {
     LOGOUT_SUCCESS,
     LOGOUT_FAILURE
 } from '../actions';
-import { object } from 'prop-types';
 
 export default function synergen(state = initialState, action) {
     switch (action.type) {
@@ -31,7 +30,7 @@ export default function synergen(state = initialState, action) {
                 authenticated: true,
                 user: Object.assign({}, state.user, {
                     ...action.user,
-                    goals: userGoals(state.user.goals, action.user)
+                    goals: action.user.goals.map( g => g.id)
                 }),
                 goals: goals(state.goals, action.user),
                 isFetching: false,
@@ -102,7 +101,7 @@ export default function synergen(state = initialState, action) {
                     goals: [...state.user.goals, action.goal.id]
                 }),
                 goals: {
-                    ...this.state.goals,
+                    ...state.goals,
                     [goal.id]: goal
                 },
                 error: null
