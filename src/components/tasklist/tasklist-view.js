@@ -8,12 +8,11 @@ import CloseIcon from '@material-ui/icons/Close';
 const TaskTile = ({ classes, task, onClear }) => (
     <Paper className={classes.taskTile}>
         <div className={classes.taskTileText}>
-            <Typography variant="h6">{task.title}</Typography>
-            <Typography>{task.description}</Typography>
+            <Typography>{task.details}</Typography>
         </div>
-        <IconButton className={classes.taskTileClose} onClick={onClear}>
+        {/*<IconButton className={classes.taskTileClose} onClick={onClear}>
             <CloseIcon />
-        </IconButton>
+           </IconButton> */}
     </Paper>
 );
 

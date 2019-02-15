@@ -1,42 +1,25 @@
-import React from 'react';
+import { connect } from 'react-redux';
 import TasklistView from './tasklist-view';
-import { withRouter } from 'react-router-dom';
 
-class Tasklist extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            tasks: [
-                {
-                    id: 'id1',
-                    title: 'Task Title',
-                    description: 'Task Description'
-                },
-                {
-                    id: 'id2',
-                    title: 'Task Title',
-                    description: 'Task Description'
-                },
-                {
-                    id: 'id3',
-                    title: 'Task Title',
-                    description: 'Task Description'
-                }
-            ]
-        };
-        this.state.tasks = [];
-
-        this.onTaskClear = this.onTaskClear.bind(this);
+const extractTasks = goals => {
+    if (goals && goals.length > 0) {
+        let tasks = [];
+        goals.forEach(goal => {
+            goal.tasks.forEach(task => {
+                tasks.push(task);
+            });
+        });
+        return tasks;
+    } else {
+        return [];
     }
+};
 
-    onTaskClear(id) {
-        console.log(id);
-    }
+const mapStateToProps = state => ({
+    tasks: extractTasks(state.user.goals.map(id => state.goals[id]))
+});
 
-    render() {
-        return <TasklistView tasks={this.state.tasks} onTaskClear={this.onTaskClear} />;
-    }
-}
-
-export default withRouter(Tasklist);
+export default connect(
+    mapStateToProps,
+    null
+)(TasklistView);

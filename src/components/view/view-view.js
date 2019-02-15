@@ -22,8 +22,9 @@ class ViewView extends React.Component {
         return (
             <div className={classes.root}>
                 <Typography variant="h4">{goal.title}</Typography>
+                <Typography variant="body2">By: @{goal.creator}</Typography>
+                <div className={classes.spacer} />
                 <Typography>{goal.description}</Typography>
-                <Typography>By: @{goal.creator}</Typography>
                 {goal.targetDate ? <Typography>Target Date: {moment(goal.targetDate, 'MMMM Do YYYY')}</Typography> : ''}
                 <Paper className={classes.paperTaskSummary}>
                     <Typography variant="h6">Tasks</Typography>

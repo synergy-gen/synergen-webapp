@@ -7,5 +7,8 @@ export default theme => ({
     paperTaskSummary: {
         marginTop: 10,
         padding: 15
+    },
+    spacer: {
+        marginBottom: 10
     }
 });
