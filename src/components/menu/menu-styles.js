@@ -8,5 +8,8 @@ export default theme => ({
     active: {
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.primary.contrastText + ' !important'
+    },
+    toolbar: {
+        ...theme.mixins.toolbar
     }
 });

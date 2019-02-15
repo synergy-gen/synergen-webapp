@@ -23,6 +23,7 @@
     "@bradenhc/client-config": "^1.1.0",
     "@material-ui/core": "^3.7.1",
     "@material-ui/icons": "^3.0.1",
+    "moment": "^2.24.0",
     "react": "^16.5.2",
     "react-cookie": "^3.0.8",
     "react-dom": "^16.5.2",

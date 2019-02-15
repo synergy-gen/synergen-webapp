@@ -15,21 +15,16 @@ const ExploreLink = ({ classes, item, onLinkSelect }) => (
             <Link className={classes.link} to={item.link}>
                 <ListItem
                     button
-                    className={window.location.href.indexOf(item.link) > 0 ? classes.active : ''}
+                    className={item.active ? classes.active : ''}
                     key={item.title}
-                    onClick={onLinkSelect}
+                    onClick={() => onLinkSelect(item.title)}
                 >
                     <ListItemIcon>{item.icon}</ListItemIcon>
                     <ListItemText key={item.title} primary={item.title} />
                 </ListItem>
             </Link>
         ) : (
-            <ListItem
-                button
-                className={window.location.href.indexOf(item.link) > 0 ? classes.active : ''}
-                key={item.title}
-                onClick={item.action}
-            >
+            <ListItem button className={item.active ? classes.active : ''} key={item.title} onClick={item.action}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText key={item.title} primary={item.title} />
             </ListItem>
@@ -41,30 +36,66 @@ class MenuView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.menuItems = [
-            { title: 'Profile', link: this.props.match.url + '/profile', icon: <PersonIcon /> },
-            { title: 'Explore', link: this.props.match.url + '/explore', icon: <SearchIcon /> },
-            { title: 'Settings', link: this.props.match.url + '/settings', icon: <SettingsIcon /> },
-            {
-                title: 'Logout',
-                action: this.props.onLogout,
-                icon: <ExitIcon style={{ transform: 'rotate(180deg)' }} />
-            }
-            //{ title: 'Supporting', link: '' },
-            //{ title: 'Groups', link: '' }
-        ];
+        let startActive = path => window.location.href.indexOf(path) > 0;
+
+        this.state = {
+            menuItems: [
+                {
+                    title: 'Profile',
+                    active: startActive('/profile'),
+                    link: this.props.match.url + '/profile',
+                    icon: <PersonIcon />
+                },
+                {
+                    title: 'Explore',
+                    active: startActive('/explore'),
+                    link: this.props.match.url + '/explore',
+                    icon: <SearchIcon />
+                },
+                {
+                    title: 'Settings',
+                    active: startActive('/settings'),
+                    link: this.props.match.url + '/settings',
+                    icon: <SettingsIcon />
+                },
+                {
+                    title: 'Logout',
+                    active: false,
+                    action: this.props.onLogout,
+                    icon: <ExitIcon style={{ transform: 'rotate(180deg)' }} />
+                }
+            ]
+        };
+
+        this.onLinkSelect = this.onLinkSelect.bind(this);
+    }
+
+    onLinkSelect(title) {
+        this.setState(previousState => ({
+            menuItems: previousState.menuItems.map(i => {
+                let item = { ...i };
+                if (i.active) item.active = false;
+                if (title === i.title) {
+                    item.active = true;
+                }
+                return item;
+            })
+        }));
+        if (this.props.onLinkSelect) {
+            this.props.onLinkSelect();
+        }
     }
 
     render() {
-        const { classes, onLinkSelect } = this.props;
+        const { classes } = this.props;
 
         return (
             <React.Fragment>
                 <div />
                 <Divider />
                 <List>
-                    {this.menuItems.map(item => (
-                        <ExploreLink key={item.title} classes={classes} item={item} onLinkSelect={onLinkSelect} />
+                    {this.state.menuItems.map(item => (
+                        <ExploreLink key={item.title} classes={classes} item={item} onLinkSelect={this.onLinkSelect} />
                     ))}
                 </List>
             </React.Fragment>
