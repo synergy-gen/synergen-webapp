@@ -31,7 +31,7 @@ const TaskInput = ({ classes, name, value, onChange, onKeyPress, onDelete, autoF
 
 const TagInput = ({ classes, value, tags, onDelete, onChange, onKeyPress }) => (
     <div className={classes.tagInput}>
-        <Typography className={classes.pushDown} variant="title">
+        <Typography className={classes.pushDown} variant="h6">
             Tags
         </Typography>
         <div className={classes.tagsChipContainer}>
@@ -195,7 +195,7 @@ class CreateGoalView extends React.Component {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography className={classes.taskSectionLabel} variant="title">
+                        <Typography className={classes.taskSectionLabel} variant="h6">
                             Tasks
                         </Typography>
                     </Grid>

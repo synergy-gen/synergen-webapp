@@ -20,7 +20,7 @@ class CreateView extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <Typography variant="title" color="inherit">Create {this.state.entity}</Typography>
+                        <Typography variant="h6" color="inherit">Create {this.state.entity}</Typography>
                     </Toolbar>
                 </AppBar>
                 {this.state.entity === 'Goal' ? <CreateGoal /> : ''}
