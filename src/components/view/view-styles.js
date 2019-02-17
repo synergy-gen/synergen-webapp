@@ -8,7 +8,15 @@ export default theme => ({
         marginTop: 10,
         padding: 15
     },
-    spacer: {
+    header: {
+        display: 'flex',
+        flexDirection: 'row',
         marginBottom: 10
+    },
+    headerContent: {
+
+    },
+    headerActions: {
+        marginLeft: 'auto'
     }
 });

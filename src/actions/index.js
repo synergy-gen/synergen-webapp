@@ -216,6 +216,40 @@ export function queryGoals(query) {
     };
 }
 
+// Editing goals
+export const EDIT_GOAL_REQUEST = 'EDIT_GOAL_REQUEST';
+function editGoalRequest() {
+    return { type: EDIT_GOAL_REQUEST };
+}
+export const EDIT_GOAL_SUCCESS = 'EDIT_GOAL_SUCCESS';
+function editGoalSuccess(goal) {
+    return { type: EDIT_GOAL_SUCCESS, goal };
+}
+export const EDIT_GOAL_FAILURE = 'EDIT_GOAL_FAILURE';
+function editGoalFailure(error) {
+    return { type: EDIT_GOAL_FAILURE, error };
+}
+
+export function editGoal(goal) {
+    return function(dispatch) {
+        dispatch(editGoalRequest());
+
+        let url = goal._links.self;
+        delete goal._links;
+        delete goal.id;
+        return new Promise((resolve, reject) => {
+            api.patch(url, goal, (err, res) => {
+                if (err) {
+                    dispatch(editGoalFailure(err.message));
+                    return reject(err);
+                }
+                dispatch(editGoalSuccess(res.content));
+                return resolve(res);
+            });
+        });
+    };
+}
+
 // Adopting goals
 export const REQUEST_ADOPT_GOAL = 'REQUEST_ADOPT_GOAL';
 export const REQUEST_ADOPT_GOAL_SUCCESS = 'REQUEST_ADOPT_GOAL_SUCCESS';

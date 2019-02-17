@@ -23,6 +23,10 @@ class ApiGateway {
         this._request('POST', path, data, cb);
     }
 
+    patch(path, data, cb) {
+        this._request('PATCH', path, data, cb);
+    }
+
     put(path, data, cb) {
         this._request('PUT', path, data, cb);
     }
@@ -52,7 +56,8 @@ class ApiGateway {
             credentials: 'include'
         };
         if (data) options.body = JSON.stringify(data);
-        fetch(this.baseUrl + path, options)
+        let url = path.indexOf('http') < 0 ? this.baseUrl + path : path;
+        fetch(url, options)
             .then(
                 res => {
                     success = res.ok;

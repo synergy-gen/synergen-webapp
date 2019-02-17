@@ -17,7 +17,10 @@ import {
     REGISTER_USER_FAILURE,
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
-    LOGOUT_FAILURE
+    LOGOUT_FAILURE,
+    EDIT_GOAL_REQUEST,
+    EDIT_GOAL_SUCCESS,
+    EDIT_GOAL_FAILURE
 } from '../actions';
 
 export default function synergen(state = initialState, action) {
@@ -30,7 +33,7 @@ export default function synergen(state = initialState, action) {
                 authenticated: true,
                 user: Object.assign({}, state.user, {
                     ...action.user,
-                    goals: action.user.goals.map( g => g.id)
+                    goals: action.user.goals.map(g => g.id)
                 }),
                 goals: goals(state.goals, action.user),
                 isFetching: false,
@@ -94,9 +97,6 @@ export default function synergen(state = initialState, action) {
         case CREATE_GOAL_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: false,
-                // TODO: right now the API is returning the entire user when we post to the user's goals resource.
-                // Once we update it to only return the created goal, we will need to change this reducer and the action
-                // associated with it
                 user: Object.assign({}, state.user, {
                     goals: [...state.user.goals, action.goal.id]
                 }),
@@ -107,6 +107,20 @@ export default function synergen(state = initialState, action) {
                 error: null
             });
         case CREATE_GOAL_FAILURE:
+            return Object.assign({}, state, { isFetching: false, error: action.error });
+
+        // Edit goal
+        case EDIT_GOAL_REQUEST:
+            return Object.assign({}, state, { isFetching: true });
+        case EDIT_GOAL_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                goals: {
+                    ...state.goals,
+                    [action.goal.id]: action.goal
+                }
+            });
+        case EDIT_GOAL_FAILURE:
             return Object.assign({}, state, { isFetching: false, error: action.error });
 
         // Logout the user

@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './view-styles';
-import { Typography, Table, TableBody, TableRow, TableCell, Paper } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Typography, Table, TableBody, TableRow, TableCell, Paper, IconButton } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 import moment from 'moment';
 
 const TaskRow = ({ classes, task }) => (
@@ -21,9 +23,19 @@ class ViewView extends React.Component {
         const goal = goals[match.params.goalId];
         return (
             <div className={classes.root}>
-                <Typography variant="h4">{goal.title}</Typography>
-                <Typography variant="body2">By: @{goal.creator}</Typography>
-                <div className={classes.spacer} />
+                <div className={classes.header}>
+                    <div className={classes.headerContent}>
+                        <Typography variant="h4">{goal.title}</Typography>
+                        <Typography variant="body2">By: @{goal.creator}</Typography>
+                    </div>
+                    <div className={classes.headerActions}>
+                        <Link to={`/app/edit/goal/${goal.id}`}>
+                            <IconButton className={classes.buttonEdit}>
+                                <EditIcon />
+                            </IconButton>
+                        </Link>
+                    </div>
+                </div>
                 <Typography>{goal.description}</Typography>
                 {goal.targetDate ? <Typography>Target Date: {moment(goal.targetDate, 'MMMM Do YYYY')}</Typography> : ''}
                 <Paper className={classes.paperTaskSummary}>
