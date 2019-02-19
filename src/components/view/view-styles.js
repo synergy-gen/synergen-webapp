@@ -1,4 +1,10 @@
 export default theme => ({
+    appBar: {
+        color: theme.palette.primary.contrastText
+    },
+    toolbarButton: {
+        color: theme.palette.primary.contrastText
+    },
     root: {
         display: 'flex',
         flexDirection: 'column',
@@ -13,10 +19,11 @@ export default theme => ({
         flexDirection: 'row',
         marginBottom: 10
     },
-    headerContent: {
-
-    },
+    headerContent: {},
     headerActions: {
         marginLeft: 'auto'
+    },
+    link: {
+        textDecoration: 'none'
     }
 });

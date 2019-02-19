@@ -250,15 +250,36 @@ export function editGoal(goal) {
     };
 }
 
-// Adopting goals
-export const REQUEST_ADOPT_GOAL = 'REQUEST_ADOPT_GOAL';
-export const REQUEST_ADOPT_GOAL_SUCCESS = 'REQUEST_ADOPT_GOAL_SUCCESS';
-export const REQUEST_ADOPT_GOAL_FAILURE = 'REQUEST_ADOPT_GOAL_FAILURE';
+// Delete goals
+export const DELETE_GOAL_REQUEST = 'DELETE_GOAL_REQUEST';
+function deleteGoalRequest() {
+    return { type: DELETE_GOAL_REQUEST };
+}
+export const DELETE_GOAL_SUCCESS = 'DELETE_GOAL_SUCCESS';
+function deleteGoalSuccess(goalId) {
+    return { type: DELETE_GOAL_SUCCESS, goalId };
+}
+export const DELETE_GOAL_FAILURE = 'DELETE_GOAL_FAILURE';
+function deleteGoalFailure(error) {
+    return { type: DELETE_GOAL_FAILURE, error };
+}
 
-// Visible goal
-export const SET_VISIBLE_GOAL = 'SET_VISIBLE_GOAL';
-export function setVisibleGoal(goal) {
-    return { type: SET_VISIBLE_GOAL, goal };
+export function deleteGoal(goal) {
+    return function(dispatch) {
+        dispatch(deleteGoalRequest());
+
+        let url = goal._links.self;
+        return new Promise((resolve, reject) => {
+            api.delete(url, (err, res) => {
+                if (err) {
+                    dispatch(deleteGoalFailure(err.message));
+                    return reject(err);
+                }
+                dispatch(deleteGoalSuccess(goal.id));
+                return resolve(res);
+            });
+        });
+    };
 }
 
 // Logout action

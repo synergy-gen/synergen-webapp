@@ -18,12 +18,13 @@ const SummaryCard = ({ classes, data }) => (
     <Grid item xs={12} sm={6} md={6} lg={4} className={classes.summaryCardGrid}>
         <Card className={classes.summaryCard}>
             <CardHeader
+                className={classes.summaryCardHeader}
                 avatar={data.completed ? <CircularProgress variant="static" value={data.completed} /> : ''}
                 title={<Typography variant="h6">{data.title}</Typography>}
                 subheader={'@' + data.creator}
             />
-            <CardContent className={classes.summaryCardDescription}>
-                <Typography noWrap={true}>{data.description}</Typography>
+            <CardContent className={classes.summaryCardContent}>
+                <p className={classes.summaryCardDescription}>{data.description}</p>
             </CardContent>
             <CardActions>
                 <Link className={classes.link} to={`/app/view/${data.id}`}>

@@ -20,7 +20,10 @@ import {
     LOGOUT_FAILURE,
     EDIT_GOAL_REQUEST,
     EDIT_GOAL_SUCCESS,
-    EDIT_GOAL_FAILURE
+    EDIT_GOAL_FAILURE,
+    DELETE_GOAL_REQUEST,
+    DELETE_GOAL_SUCCESS,
+    DELETE_GOAL_FAILURE
 } from '../actions';
 
 export default function synergen(state = initialState, action) {
@@ -121,6 +124,22 @@ export default function synergen(state = initialState, action) {
                 }
             });
         case EDIT_GOAL_FAILURE:
+            return Object.assign({}, state, { isFetching: false, error: action.error });
+
+        // Delete goal
+        case DELETE_GOAL_REQUEST:
+            return Object.assign({}, state, { isFetching: true });
+        case DELETE_GOAL_SUCCESS:
+            let newState = Object.assign({}, state, {
+                isFetching: false,
+                user: {
+                    ...state.user,
+                    goals: state.user.goals.filter(g => g !== action.goalId)
+                }
+            });
+            delete newState.goals[action.goalId];
+            return newState;
+        case DELETE_GOAL_FAILURE:
             return Object.assign({}, state, { isFetching: false, error: action.error });
 
         // Logout the user

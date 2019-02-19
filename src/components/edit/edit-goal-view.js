@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+import BackArrowIcon from '@material-ui/icons/ArrowBack';
 
 const TaskInput = ({ classes, index, value, onChange, onKeyPress, onDelete, autoFocus, numTasks }) => (
     <TextField
@@ -75,6 +76,7 @@ class EditGoalView extends Component {
         const { goal } = this.props;
 
         this.state = {
+            changed: false,
             title: goal.title,
             description: goal.description,
             tasks: goal.tasks,
@@ -90,6 +92,7 @@ class EditGoalView extends Component {
         this.onDeleteTask = this.onDeleteTask.bind(this);
         this.handleTagKeyPress = this.handleTagKeyPress.bind(this);
         this.onDeleteTag = this.onDeleteTag.bind(this);
+        this.onDeleteGoal = this.onDeleteGoal.bind(this);
     }
 
     handleChange(e) {
@@ -160,21 +163,30 @@ class EditGoalView extends Component {
         return false;
     }
 
+    onDeleteGoal() {
+        this.props.onDeleteGoal(this.props.goal);
+    }
+
     render() {
         const { classes, match } = this.props;
         return (
             <form onSubmit={this.onEditSubmit} className={classes.root}>
                 <AppBar position="static">
                     <Toolbar className={classes.appToolbar}>
+                        <Link to={`/app/view/${match.params.entityId}`} className={classes.link}>
+                            <IconButton className={classes.buttonCancel}>
+                                <BackArrowIcon />
+                            </IconButton>
+                        </Link>
                         <Typography variant="h6" color="inherit">
                             Edit {match.params.entity === 'goal' ? 'Goal' : 'Objective'}
                         </Typography>
                         <Button className={classes.buttonSave} variant="contained" color="secondary" type="submit">
                             Save
                         </Button>
-                        <Link to={`/app/view/${match.params.entityId}`} className={classes.link}>
-                            <Button className={classes.buttonCancel}>Cancel</Button>
-                        </Link>
+                        <IconButton className={classes.buttonDelete} onClick={this.onDeleteGoal}>
+                            <DeleteIcon />
+                        </IconButton>
                     </Toolbar>
                 </AppBar>
                 <Grid container spacing={8} direction="column" className={classes.gridRoot}>

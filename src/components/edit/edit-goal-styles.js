@@ -11,7 +11,9 @@ export default theme => ({
         marginLeft: 'auto'
     },
     buttonCancel: {
-        marginLeft: 'auto',
+        color: theme.palette.primary.contrastText
+    },
+    buttonDelete: {
         color: theme.palette.primary.contrastText
     },
     gridRoot: {
