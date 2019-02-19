@@ -17,6 +17,7 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import BackArrowIcon from '@material-ui/icons/ArrowBack';
+import Dialog from '../dialog-box/dialog-view';
 
 const TaskInput = ({ classes, index, value, onChange, onKeyPress, onDelete, autoFocus, numTasks }) => (
     <TextField
@@ -77,6 +78,7 @@ class EditGoalView extends Component {
 
         this.state = {
             changed: false,
+            dialogOpen: false,
             title: goal.title,
             description: goal.description,
             tasks: goal.tasks,
@@ -93,10 +95,20 @@ class EditGoalView extends Component {
         this.handleTagKeyPress = this.handleTagKeyPress.bind(this);
         this.onDeleteTag = this.onDeleteTag.bind(this);
         this.onDeleteGoal = this.onDeleteGoal.bind(this);
+        this.handleOpenDialog = this.handleOpenDialog.bind(this);
+        this.handleCloseDialog = this.handleCloseDialog.bind(this);
     }
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+    }
+
+    handleOpenDialog() {
+        this.setState({ dialogOpen: true });
+    }
+
+    handleCloseDialog() {
+        this.setState({ dialogOpen: false });
     }
 
     handleTaskDetailsChange(index, value) {
@@ -164,6 +176,7 @@ class EditGoalView extends Component {
     }
 
     onDeleteGoal() {
+        console.log(this.props);
         this.props.onDeleteGoal(this.props.goal);
     }
 
@@ -184,9 +197,16 @@ class EditGoalView extends Component {
                         <Button className={classes.buttonSave} variant="contained" color="secondary" type="submit">
                             Save
                         </Button>
-                        <IconButton className={classes.buttonDelete} onClick={this.onDeleteGoal}>
+                        <IconButton className={classes.buttonDelete} onClick={this.handleOpenDialog}>
                             <DeleteIcon />
                         </IconButton>
+                        <Dialog
+                            open={this.state.dialogOpen}
+                            title="Delete Goal?"
+                            message="Are you sure you want to delete this goal?"
+                            onConfirm={this.onDeleteGoal}
+                            onClose={this.handleCloseDialog}
+                        />
                     </Toolbar>
                 </AppBar>
                 <Grid container spacing={8} direction="column" className={classes.gridRoot}>

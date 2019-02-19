@@ -1,6 +1,5 @@
 import ProfileView from './profile-view';
 import { connect } from 'react-redux';
-import { setVisibleGoal } from '../../actions';
 
 const mapStateToProps = state => {
     return {
@@ -9,9 +8,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        onGoalSelect: id => dispatch(setVisibleGoal(id))
-    };
+    return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileView);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ProfileView);
