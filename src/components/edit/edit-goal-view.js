@@ -161,7 +161,7 @@ class EditGoalView extends Component {
             _links: this.props.goal._links,
             title: this.state.title,
             description: this.state.description,
-            tasks: this.state.tasks.map(t => {
+            tasks: this.state.tasks.filter(t => t.details !== '').map(t => {
                 let task = {};
                 if (t.id) {
                     task.id = t.id;
@@ -176,7 +176,6 @@ class EditGoalView extends Component {
     }
 
     onDeleteGoal() {
-        console.log(this.props);
         this.props.onDeleteGoal(this.props.goal);
     }
 
