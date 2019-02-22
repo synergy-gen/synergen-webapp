@@ -208,7 +208,7 @@ class CreateGoalView extends React.Component {
                                 name={pair[0]}
                                 value={pair[1]}
                                 numTasks={this.state.numTasks}
-                                autoFocus={this.state.title !== '' && index + 1 === arr.length}
+                                autoFocus={arr.length > 1 && index + 1 === arr.length && pair[1] == ''}
                                 onChange={this.handleTaskDetailsChange}
                                 onKeyPress={this.handleTaskDetailsKeyPress}
                                 onDelete={() => this.onDeleteTask(pair[0])}
