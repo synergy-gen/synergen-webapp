@@ -121,6 +121,7 @@ class EditGoalView extends Component {
         if (e.key === 'Enter') {
             e.stopPropagation();
             e.preventDefault();
+            this.onAddTask();
         }
     }
 
