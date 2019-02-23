@@ -2,25 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './create-goal-styles';
-import { Grid, TextField, Typography, IconButton, InputAdornment, Button, Chip } from '@material-ui/core';
+import {
+    Grid,
+    TextField,
+    Typography,
+    IconButton,
+    InputAdornment,
+    Button,
+    Chip,
+    Checkbox,
+    FormControlLabel
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const TaskInput = ({ classes, name, value, onChange, onKeyPress, onDelete, autoFocus, numTasks }) => (
+const TaskInput = ({ classes, index, value, onChange, onKeyPress, onDelete, autoFocus }) => (
     <TextField
-        required={numTasks <= 1}
+        required={index === 0}
         className={classes.taskTextField}
-        name={name}
         value={value}
         variant="outlined"
         placeholder="Task Details"
-        onChange={onChange}
+        onChange={e => onChange(index, e.target.value)}
         onKeyPress={onKeyPress}
         autoFocus={autoFocus}
         InputProps={{
             endAdornment: (
                 <InputAdornment position="end">
-                    <IconButton aria-label="Toggle password visibility" onClick={onDelete}>
+                    <IconButton aria-label="Delete Task" onClick={() => onDelete(index)}>
                         <DeleteIcon />
                     </IconButton>
                 </InputAdornment>
@@ -35,13 +44,13 @@ const TagInput = ({ classes, value, tags, onDelete, onChange, onKeyPress }) => (
             Tags
         </Typography>
         <div className={classes.tagsChipContainer}>
-            {Object.entries(tags).map(pair => (
+            {tags.map((tag, index) => (
                 <Chip
                     className={classes.tagChip}
-                    key={pair[0]}
+                    key={index}
                     variant="outlined"
-                    label={pair[1]}
-                    onDelete={() => onDelete(pair[0])}
+                    label={tag}
+                    onDelete={() => onDelete(index)}
                 />
             ))}
         </div>
@@ -58,6 +67,17 @@ const TagInput = ({ classes, value, tags, onDelete, onChange, onKeyPress }) => (
     </div>
 );
 
+const PublishCheckbox = ({ classes, shouldPublish, onChange }) => (
+    <div className={classes.checkboxPublish}>
+        <FormControlLabel
+            label="Publish Goal"
+            labelPlacement="end"
+            control={<Checkbox checked={shouldPublish} onChange={onChange} />}
+        />
+        {shouldPublish ? <Typography>Publishing your goal will make it available for others to adopt</Typography> : ''}
+    </div>
+);
+
 class CreateGoalView extends React.Component {
     constructor(props) {
         super(props);
@@ -65,14 +85,10 @@ class CreateGoalView extends React.Component {
         this.state = {
             title: '',
             description: '',
-            tasks: {
-                0: ''
-            },
-            tags: {},
+            tasks: [''],
+            tags: [],
             currentTag: '',
-            nextTask: 1,
-            nextTag: 1,
-            numTasks: 1
+            shouldPublish: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -83,19 +99,17 @@ class CreateGoalView extends React.Component {
         this.onDeleteTask = this.onDeleteTask.bind(this);
         this.handleTagKeyPress = this.handleTagKeyPress.bind(this);
         this.onDeleteTag = this.onDeleteTag.bind(this);
+        this.handlePublishCheckboxChange = this.handlePublishCheckboxChange.bind(this);
     }
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    handleTaskDetailsChange(e) {
-        this.setState({
-            tasks: {
-                ...this.state.tasks,
-                [e.target.name]: e.target.value
-            }
-        });
+    handleTaskDetailsChange(index, value) {
+        let tasks = [...this.state.tasks];
+        tasks[index] = value;
+        this.setState({ tasks });
     }
 
     handleTaskDetailsKeyPress(e) {
@@ -107,39 +121,38 @@ class CreateGoalView extends React.Component {
     }
 
     onAddTask() {
-        this.setState({ tasks: { ...this.state.tasks, [this.state.nextTask++]: '' }, numTasks: ++this.state.numTasks });
+        let tasks = [...this.state.tasks, ''];
+        this.setState({ tasks });
     }
 
-    onDeleteTask(key) {
-        if (this.state.numTasks === 1) return;
-        let tasks = { ...this.state.tasks };
-        delete tasks[key];
-        this.setState({ tasks, numTasks: --this.state.numTasks });
+    onDeleteTask(index) {
+        let tasks = [this.state.tasks];
+        tasks.splice(index, 1);
+        this.setState({ tasks });
     }
 
     handleTagKeyPress(e) {
         if (e.key === 'Enter') {
             e.preventDefault();
             e.stopPropagation();
-            if (!Array.from(Object.values(this.state.tags)).includes(this.state.currentTag)) {
-                this.setState({
-                    tags: {
-                        ...this.state.tags,
-                        [this.state.nextTag]: this.state.currentTag
-                    },
-                    currentTag: '',
-                    nextTag: ++this.state.nextTag
-                });
+            if (!this.state.tags.includes(this.state.currentTag)) {
+                let tags = [...this.state.tags];
+                tags.push(this.state.currentTag);
+                this.setState({ tags, currentTag: '' });
             } else {
                 this.setState({ currentTag: '' });
             }
         }
     }
 
-    onDeleteTag(key) {
-        let tags = { ...this.state.tags };
-        delete tags[key];
+    onDeleteTag(index) {
+        let tags = [...this.state.tags];
+        tags.splice(index, 1);
         this.setState({ tags });
+    }
+
+    handlePublishCheckboxChange() {
+        this.setState({ shouldPublish: !this.state.shouldPublish });
     }
 
     onCreateGoalSubmit(e) {
@@ -147,10 +160,10 @@ class CreateGoalView extends React.Component {
         let goal = {
             title: this.state.title,
             description: this.state.description,
-            tasks: Array.from(Object.values(this.state.tasks)).filter(t => t !== ''),
-            tags: Array.from(Object.values(this.state.tags))
+            tasks: this.state.tasks.filter(t => t !== ''),
+            tags: this.state.tags
         };
-        this.props.onCreateGoal(goal);
+        this.props.onCreateGoal(goal, this.state.shouldPublish);
         return false;
     }
 
@@ -201,22 +214,28 @@ class CreateGoalView extends React.Component {
                         </Typography>
                     </Grid>
                     <Grid className={classes.gridItem} item className={classes.tasks} xs={12}>
-                        {Object.entries(this.state.tasks).map((pair, index, arr) => (
+                        {this.state.tasks.map((task, index, arr) => (
                             <TaskInput
                                 classes={classes}
-                                key={pair[0]}
-                                name={pair[0]}
-                                value={pair[1]}
-                                numTasks={this.state.numTasks}
-                                autoFocus={arr.length > 1 && index + 1 === arr.length && pair[1] == ''}
+                                key={index}
+                                index={index}
+                                value={task}
+                                autoFocus={arr.length > 1 && index + 1 === arr.length && task == ''}
                                 onChange={this.handleTaskDetailsChange}
                                 onKeyPress={this.handleTaskDetailsKeyPress}
-                                onDelete={() => this.onDeleteTask(pair[0])}
+                                onDelete={this.onDeleteTask}
                             />
                         ))}
                         <IconButton className={classes.buttonAddTask} onClick={this.onAddTask}>
                             <AddIcon />
                         </IconButton>
+                    </Grid>
+                    <Grid className={classes.gridItem} item xs={12}>
+                        <PublishCheckbox
+                            classes={classes}
+                            shouldPublish={this.state.shouldPublish}
+                            onChange={this.handlePublishCheckboxChange}
+                        />
                     </Grid>
                     <Grid item xs={12}>
                         <Button variant="contained" color="primary" type="submit">

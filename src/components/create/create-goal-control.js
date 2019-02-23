@@ -1,12 +1,17 @@
 import { connect } from 'react-redux';
-import { createGoal } from '../../actions';
+import { createGoal, publishGoal } from '../../actions';
 import CreateGoalView from './create-goal-view';
 import { withRouter } from 'react-router-dom';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onCreateGoal: goal =>
+    onCreateGoal: (goal, shouldPublish) =>
         dispatch(createGoal(goal))
-            .then(ownProps.history.push('/app/profile'))
+            .then(() => {
+                if (shouldPublish) {
+                    return dispatch(publishGoal(goal)).then(ownProps.history.push('/app/profile'));
+                }
+                ownProps.history.push('/app/profile');
+            })
             .catch(console.log)
 });
 

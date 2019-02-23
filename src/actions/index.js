@@ -157,33 +157,57 @@ export function createGoal(goal) {
         goal.creator = state.user.id;
 
         return new Promise((resolve, reject) => {
-            // If it is a public goal, then we need to post it to the public goals, otherwise just add it to the
-            // user
-            if (goal.public) {
-                api.post('/goals', goal, (err, res) => {
-                    if (err) {
-                        dispatch(createGoalFailure(err.message));
-                        return reject(err);
-                    }
-                    // We dispatch an empty goal because when a user creates a public goal, it doesn't automatically
-                    // add it to the list of goals they are working on (TODO is this the case??)
-                    dispatch(createGoalSuccess({}));
-                    return resolve(res);
-                });
-            } else {
-                api.post(`/users/${goal.creator}/goals`, goal, (err, res) => {
-                    if (err) {
-                        dispatch(createGoalFailure(err.message));
-                        return reject(err);
-                    }
+            api.post(`/users/${goal.creator}/goals`, goal, (err, res) => {
+                if (err) {
+                    dispatch(createGoalFailure(err.message));
+                    return reject(err);
+                }
 
-                    dispatch(createGoalSuccess(res.content));
-                    return resolve(res);
-                });
-            }
+                dispatch(createGoalSuccess(res.content));
+                return resolve(res);
+            });
         });
     };
 }
+
+
+// Publish an existing goal
+export const PUBLISH_GOAL_REQUEST = 'PUBLISH_GOAL_REQUEST';
+function publishGoalRequest() {
+    return { type: PUBLISH_GOAL_REQUEST };
+}
+
+export const PUBLISH_GOAL_SUCCESS = 'PUBLISH_GOAL_SUCCESS';
+function publishGoalSuccess(goal) {
+    return { type: PUBLISH_GOAL_SUCCESS, goal };
+}
+
+export const PUBLISH_GOAL_FAILURE = 'PUBLISH_GOAL_FAILURE';
+function publishGoalFailure(error) {
+    return { type: PUBLISH_GOAL_FAILURE, error };
+}
+
+export function publishGoal(goal) {
+    return function(dispatch, getState) {
+        dispatch(publishGoalRequest());
+
+        let state = getState();
+        goal.creator = state.user.id;
+
+        return new Promise((resolve, reject) => {
+            api.post(`/goals`, goal, (err, res) => {
+                if (err) {
+                    dispatch(publishGoalFailure(err.message));
+                    return reject(err);
+                }
+
+                dispatch(publishGoalSuccess(res.content));
+                return resolve(res);
+            });
+        });
+    };
+}
+
 
 // Searching goals
 export const QUERY_GOALS_REQUEST = 'QUERY_GOALS_REQUEST';
