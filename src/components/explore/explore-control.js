@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import ExploreView from './explore-view';
-import { queryGoals } from '../../actions';
+import { queryGoals } from '../../actions/explore';
 
 const mapStateToProps = state => ({
-    goals: state.explore.results
+    results: state.explore.results
 });
 
 const mapDispatchToProps = dispatch => ({

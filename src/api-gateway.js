@@ -4,6 +4,7 @@ class ApiGateway {
     constructor() {
         this.baseUrl = null;
         this.initialized = false;
+        this.token = this._getCookie('auth');
     }
 
     init(cb) {
@@ -13,6 +14,16 @@ class ApiGateway {
             this.baseUrl = `${config.get('api.scheme')}://${config.get('api.host')}/api/${config.get('api.version')}`;
             cb(null);
         });
+    }
+
+    setToken(token) {
+        this.token = token;
+        document.cookie = 'auth=' + token + '; path=/';
+    }
+
+    deleteToken() {
+        this.token = null;
+        document.cookie = 'auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     }
 
     get(path, cb) {
@@ -52,9 +63,9 @@ class ApiGateway {
             method,
             headers: {
                 'Content-Type': 'application/json'
-            },
-            credentials: 'include'
+            }
         };
+        if (this.token) options.headers['Authorization'] = 'Bearer ' + this.token;
         if (data) options.body = JSON.stringify(data);
         let url = path.indexOf('http') < 0 ? this.baseUrl + path : path;
         fetch(url, options)
@@ -72,6 +83,22 @@ class ApiGateway {
                 },
                 err => cb(err, null)
             );
+    }
+
+    _getCookie(cname) {
+        var name = cname + '=';
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return null;
     }
 }
 

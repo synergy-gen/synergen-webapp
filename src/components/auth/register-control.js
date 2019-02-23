@@ -1,15 +1,35 @@
 import { connect } from 'react-redux';
-import { verifyUserIsAuthenticated, registerUser } from '../../actions';
+import { verifyUserIsAuthenticated } from '../../actions/auth';
+import { fetchUserInfo, registerUser } from '../../actions/profile';
 import RegisterView from './register-view';
 
 const mapStateToProps = state => ({
-    error: state.error,
-    loggedIn: state.authenticated
+    error: state.auth.error,
+    loggedIn: state.auth.authenticated
 });
 
 const mapDispatchToProps = dispatch => ({
-    verifyUserIsAuthenticated: () => dispatch(verifyUserIsAuthenticated()),
-    registerUser: (name, email, username, password) => dispatch(registerUser(name, email, username, password))
+    verifyUserIsAuthenticated: () =>
+        dispatch(verifyUserIsAuthenticated()).then(
+            res => {
+                dispatch(fetchUserInfo(res.content.uid));
+            },
+            err => {
+                console.log(err);
+            }
+        ),
+    registerUser: (name, email, username, password) =>
+        dispatch(registerUser(name, email, username, password)).then(
+            res => {
+                dispatch(fetchUserInfo(res.content.uid));
+            },
+            err => {
+                console.log(err);
+            }
+        )
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterView);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RegisterView);

@@ -1,18 +1,18 @@
 export default {
-    authenticated: null,
-    user: {
-        id: null,
-        username: '',
-        name: '',
-        email: '',
-        slogan: '',
-        goals: []
+    auth: {
+        isFetching: false,
+        error: null,
+        authenticated: null
+    },
+    profile: {
+        isFetching: false,
+        error: null,
+        id: null
     },
     explore: {
+        isFetching: false,
+        error: null,
         query: '',
         results: []
-    },
-    goals: {},
-    error: null,
-    isFetching: false
+    }
 };

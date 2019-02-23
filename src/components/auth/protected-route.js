@@ -23,7 +23,7 @@ function ProtectedRoute({ authenticated, component: Component, ...rest }) {
 }
 
 const mapStateToProps = state => ({
-    authenticated: state.authenticated
+    authenticated: state.auth.authenticated
 });
 
 export default connect(mapStateToProps, null)(ProtectedRoute);

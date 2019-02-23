@@ -81,9 +81,9 @@ class ExploreView extends React.Component {
                     </Grid>
                 </Grid>
                 <Grid container justify="center">
-                    {Array.from(Object.values(goals)).map(goal => (
+                    {goals ? Array.from(Object.values(goals)).map(goal => (
                         <GoalTile key={goal.id} classes={classes} goal={goal} />
-                    ))}
+                    )) : ''}
                 </Grid>
             </React.Fragment>
         );

@@ -15,9 +15,9 @@ class ProfileSummaryView extends React.Component {
 
         return (
             <Grid container spacing={8} justify="center">
-                {data.map(d => (
+                {data ? Array.from(Object.values(data)).map(d => (
                     <SummaryCard key={d.id} data={d} />
-                ))}
+                )) : ''}
             </Grid>
         );
     }

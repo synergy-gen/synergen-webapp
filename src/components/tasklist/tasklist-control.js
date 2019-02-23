@@ -2,13 +2,13 @@ import { connect } from 'react-redux';
 import TasklistView from './tasklist-view';
 
 const extractTasks = goals => {
-    if (goals && goals.length > 0) {
+    if (goals) {
         let tasks = [];
-        goals.forEach(goal => {
-            goal.tasks.forEach(task => {
+        for(let id in goals) {
+            goals[id].tasks.forEach(task => {
                 tasks.push(task);
             });
-        });
+        }
         return tasks;
     } else {
         return [];
@@ -16,7 +16,7 @@ const extractTasks = goals => {
 };
 
 const mapStateToProps = state => ({
-    tasks: extractTasks(state.user.goals.map(id => state.goals[id]))
+    tasks: extractTasks(state.profile.goals)
 });
 
 export default connect(
