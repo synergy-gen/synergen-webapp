@@ -14,20 +14,20 @@ import {
     CardActions
 } from '@material-ui/core';
 
-const SummaryCard = ({ classes, data }) => (
+const SummaryCard = ({ classes, title, description, creator, completed, image, viewPath }) => (
     <Grid item xs={12} sm={6} md={6} lg={4} className={classes.summaryCardGrid}>
         <Card className={classes.summaryCard}>
             <CardHeader
                 className={classes.summaryCardHeader}
-                avatar={data.completed ? <CircularProgress variant="static" value={data.completed} /> : ''}
-                title={<Typography variant="h6">{data.title}</Typography>}
-                subheader={'@' + data.creator}
+                avatar={completed ? <CircularProgress variant="static" value={data.completed} /> : image ? '' : ''}
+                title={<Typography variant="h6">{title}</Typography>}
+                subheader={'@' + creator}
             />
             <CardContent className={classes.summaryCardContent}>
-                <p className={classes.summaryCardDescription}>{data.description}</p>
+                <p className={classes.summaryCardDescription}>{description}</p>
             </CardContent>
             <CardActions>
-                <Link className={classes.link} to={`/app/view/${data.id}`}>
+                <Link className={classes.link} to={viewPath}>
                     <Button>View Details</Button>
                 </Link>
             </CardActions>
@@ -37,7 +37,12 @@ const SummaryCard = ({ classes, data }) => (
 
 SummaryCard.propTypes = {
     classes: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired
+    title: PropTypes.string,
+    description: PropTypes.string,
+    creator: PropTypes.string,
+    completed: PropTypes.number,
+    image: PropTypes.string,
+    viewPath: PropTypes.string
 };
 
 export default withStyles(styles)(SummaryCard);

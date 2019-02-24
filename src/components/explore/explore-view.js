@@ -16,19 +16,7 @@ import {
     Button
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-
-const GoalTile = ({ classes, goal }) => (
-    <Card className={classes.goalTile}>
-        <CardHeader title={goal.title} subheader={goal.creator} />
-        <CardMedia className={classes.goalCardImage} />
-        <CardContent>
-            <Typography>{goal.description}</Typography>
-        </CardContent>
-        <CardActions>
-            <Button className={classes.buttonAdoptGoal}>Adopt</Button>
-        </CardActions>
-    </Card>
-);
+import SummaryCard from '../summary-card/summary-card-view';
 
 class ExploreView extends React.Component {
     constructor(props) {
@@ -71,7 +59,7 @@ class ExploreView extends React.Component {
     }
 
     render() {
-        const { classes, goals } = this.props;
+        const { classes, results } = this.props;
 
         return (
             <React.Fragment>
@@ -81,9 +69,18 @@ class ExploreView extends React.Component {
                     </Grid>
                 </Grid>
                 <Grid container justify="center">
-                    {goals ? Array.from(Object.values(goals)).map(goal => (
-                        <GoalTile key={goal.id} classes={classes} goal={goal} />
-                    )) : ''}
+                    {results
+                        ? Array.from(Object.values(results)).map(res => (
+                              <SummaryCard
+                                  key={res.id}
+                                  title={res.latest.title}
+                                  description={res.latest.description}
+                                  creator={res.creator}
+                                  image={null}
+                                  viewPath={`/explore/results/${res.id}`}
+                              />
+                          ))
+                        : ''}
                 </Grid>
             </React.Fragment>
         );
