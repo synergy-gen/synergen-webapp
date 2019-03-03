@@ -15,7 +15,6 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import BackArrowIcon from '@material-ui/icons/ArrowBack';
-import moment from 'moment';
 
 const styles = theme => ({
     appBar: {
@@ -61,7 +60,7 @@ class DetailsView extends Component {
     }
 
     render() {
-        const { classes, goal } = this.props;
+        const { classes, goal, onAdopt } = this.props;
 
         return (
             <React.Fragment>
@@ -76,7 +75,9 @@ class DetailsView extends Component {
                             Explore Result Details
                         </Typography>
                         <div className={classes.headerActions}>
-                            <Button color="secondary" variant="contained">Adopt</Button>
+                            <Button color="secondary" variant="contained" onClick={onAdopt}>
+                                Adopt
+                            </Button>
                         </div>
                     </Toolbar>
                 </AppBar>

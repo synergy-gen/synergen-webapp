@@ -1,4 +1,5 @@
 import api from '../api-gateway';
+import { authenticateUser } from './auth';
 
 // Register a new user
 export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST';

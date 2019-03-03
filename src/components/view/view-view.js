@@ -30,8 +30,7 @@ class ViewView extends React.Component {
     }
 
     render() {
-        const { classes, goals, match } = this.props;
-        const goal = goals[match.params.goalId];
+        const { classes, goal, userIsOwner, match } = this.props;
         return (
             <React.Fragment>
                 <AppBar className={classes.appBar} position="static">
@@ -45,11 +44,15 @@ class ViewView extends React.Component {
                             View Details
                         </Typography>
                         <div className={classes.headerActions}>
-                            <Link to={`/app/edit/goal/${goal.id}`}>
-                                <IconButton className={classes.toolbarButton}>
-                                    <EditIcon />
-                                </IconButton>
-                            </Link>
+                            {userIsOwner ? (
+                                <Link to={`/app/edit/goal/${goal.id}`}>
+                                    <IconButton className={classes.toolbarButton}>
+                                        <EditIcon />
+                                    </IconButton>
+                                </Link>
+                            ) : (
+                                ''
+                            )}
                         </div>
                     </Toolbar>
                 </AppBar>

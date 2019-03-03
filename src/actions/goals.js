@@ -140,3 +140,39 @@ export function publishGoal(goal) {
         });
     };
 }
+
+// Adopt a goal
+export const ADOPT_GOAL_REQUEST = 'ADOPT_GOAL_REQUEST';
+function adoptGoalRequest() {
+    return { type: ADOPT_GOAL_REQUEST };
+}
+
+export const ADOPT_GOAL_SUCCESS = 'ADOPT_GOAL_SUCCESS';
+function adoptGoalSuccess(goal) {
+    return { type: ADOPT_GOAL_SUCCESS, goal };
+}
+
+export const ADOPT_GOAL_FAILURE = 'ADOPT_GOAL_FAILURE';
+function adoptGoalFailure(error) {
+    return { type: ADOPT_GOAL_FAILURE, error };
+}
+
+export function adoptGoal(goalId) {
+    return function(dispatch, getState) {
+        dispatch(adoptGoalRequest());
+        let uid = getState().profile.id;
+
+        let data = { uid };
+
+        return new Promise((resolve, reject) => {
+            api.post(`/goals/${goalId}/adoptions`, data, (err, res) => {
+                if (err) {
+                    dispatch(adoptGoalFailure(err.message));
+                    return reject(err);
+                }
+                dispatch(adoptGoalSuccess(res.content));
+                return resolve(res);
+            });
+        });
+    };
+}

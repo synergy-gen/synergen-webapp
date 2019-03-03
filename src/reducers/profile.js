@@ -19,7 +19,10 @@ import {
     DELETE_GOAL_FAILURE,
     PUBLISH_GOAL_REQUEST,
     PUBLISH_GOAL_SUCCESS,
-    PUBLISH_GOAL_FAILURE
+    PUBLISH_GOAL_FAILURE,
+    ADOPT_GOAL_REQUEST,
+    ADOPT_GOAL_SUCCESS,
+    ADOPT_GOAL_FAILURE
 } from '../actions/goals';
 
 export default function profile(state = {}, action) {
@@ -43,6 +46,7 @@ export default function profile(state = {}, action) {
         case EDIT_GOAL_REQUEST:
         case DELETE_GOAL_REQUEST:
         case PUBLISH_GOAL_REQUEST:
+        case ADOPT_GOAL_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true
             });
@@ -66,6 +70,7 @@ export default function profile(state = {}, action) {
         case EDIT_GOAL_FAILURE:
         case DELETE_GOAL_FAILURE:
         case PUBLISH_GOAL_FAILURE:
+        case ADOPT_GOAL_FAILURE:
             return Object.assign({}, state, {
                 isFetching: false,
                 error: action.error
@@ -97,6 +102,15 @@ export default function profile(state = {}, action) {
                 isFetching: false,
                 error: null,
                 published
+            });
+
+        case ADOPT_GOAL_SUCCESS:
+            let goals = { ...state.goals };
+            goals[action.goal.id] = action.goal;
+            return Object.assign({}, state, {
+                isFetching: false,
+                error: null,
+                goals
             });
 
         default:
