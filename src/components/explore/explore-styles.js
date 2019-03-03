@@ -1,6 +1,6 @@
 export default theme => ({
     searchContainer: {
-        backgroundColor: theme.palette.primary.light,
+        //backgroundColor: theme.palette.secondary.light,
         paddingTop: 20,
         paddingBottom: 20
     },

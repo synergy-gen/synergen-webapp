@@ -2,18 +2,18 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect} from 'react-redux';
 
-function ProtectedRoute({ authenticated, component: Component, ...rest }) {
+function ProtectedRoute({ authenticated, component: Component, props, ...rest }) {
     return (
         <Route
             {...rest}
-            render={props =>
+            render={p =>
                 authenticated ? (
-                    <Component {...props} />
+                    <Component {...p} {...props} />
                 ) : (
                     <Redirect
                         to={{
                             pathname: '/login',
-                            state: { from: props.location }
+                            state: { from: p.location }
                         }}
                     />
                 )

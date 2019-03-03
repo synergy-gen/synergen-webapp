@@ -1,16 +1,13 @@
 import { connect } from 'react-redux';
 import ExploreView from './explore-view';
 import { queryGoals } from '../../actions/explore';
+import { withRouter } from 'react-router-dom';
 
-const mapStateToProps = state => ({
-    results: state.explore.results
-});
-
-const mapDispatchToProps = dispatch => ({
-    searchForGoals: query => dispatch(queryGoals(query))
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    searchForGoals: query => dispatch(queryGoals(query)).then(ownProps.history.push(`/app/explore`))
 });
 
 export default connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
-)(ExploreView);
+)(withRouter(ExploreView));

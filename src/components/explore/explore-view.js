@@ -2,21 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './explore-styles';
-import {
-    Paper,
-    InputBase,
-    IconButton,
-    Grid,
-    Card,
-    CardHeader,
-    CardActions,
-    CardMedia,
-    CardContent,
-    Typography,
-    Button
-} from '@material-ui/core';
+import { Paper, InputBase, IconButton, Grid } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import SummaryCard from '../summary-card/summary-card-view';
+import { Switch } from 'react-router-dom';
+import ProtectedRoute from '../auth/protected-route';
+import SearchResults from './results/results-view';
+import ResultGoalDetails from './details/details-control';
 
 class ExploreView extends React.Component {
     constructor(props) {
@@ -26,13 +17,13 @@ class ExploreView extends React.Component {
             search: ''
         };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.handleSearchChange = this.handleSearchChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.renderSearchBar = this.renderSearchBar.bind(this);
     }
 
-    handleChange(event) {
-        this.setState({ [event.target.name]: event.target.value });
+    handleSearchChange(event) {
+        this.setState({ search: event.target.value });
     }
 
     handleSearch(event) {
@@ -46,10 +37,9 @@ class ExploreView extends React.Component {
         return (
             <Paper className={classes.root} elevation={1}>
                 <InputBase
-                    name="search"
                     className={classes.input}
                     placeholder="Search Synergen"
-                    onChange={this.handleChange}
+                    onChange={this.handleSearchChange}
                 />
                 <IconButton className={classes.iconButton} aria-label="Search">
                     <SearchIcon />
@@ -69,18 +59,10 @@ class ExploreView extends React.Component {
                     </Grid>
                 </Grid>
                 <Grid container justify="center">
-                    {results
-                        ? Array.from(Object.values(results)).map(res => (
-                              <SummaryCard
-                                  key={res.id}
-                                  title={res.latest.title}
-                                  description={res.latest.description}
-                                  creator={res.creator}
-                                  image={null}
-                                  viewPath={`/explore/results/${res.id}`}
-                              />
-                          ))
-                        : ''}
+                    <Switch>
+                        <ProtectedRoute exact path="/app/explore" component={SearchResults} />
+                        <ProtectedRoute exact path="/app/explore/results/:id" component={ResultGoalDetails} />
+                    </Switch>
                 </Grid>
             </React.Fragment>
         );
