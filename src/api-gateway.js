@@ -38,37 +38,45 @@ class ApiGateway {
         this._request('PATCH', path, data, cb);
     }
 
-    put(path, data, cb) {
-        this._request('PUT', path, data, cb);
+    put(path, data, options, cb) {
+        this._request('PUT', path, data, options, cb);
     }
 
     delete(path, cb) {
         this._request('DELETE', path, null, cb);
     }
 
-    _request(method, path, data, cb) {
+    _request(method, path, data, options, cb) {
         if (!this.initialized) {
             this.init(err => {
                 if (err) return cb(new Error('Failed to make request: ' + err.message));
-                this._sendRequest(method, path, data, cb);
+                this._sendRequest(method, path, data, options, cb);
             });
         } else {
-            this._sendRequest(method, path, data, cb);
+            this._sendRequest(method, path, data, options, cb);
         }
     }
 
-    _sendRequest(method, path, data, cb) {
+    _sendRequest(method, path, data, options, cb) {
+        if (!cb) {
+            cb = options;
+            options = {
+                contentType: 'application/json'
+            };
+        }
+
         let success = false;
-        let options = {
-            method,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-        if (this.token) options.headers['Authorization'] = 'Bearer ' + this.token;
-        if (data) options.body = JSON.stringify(data);
+        let fetchOptions = { method, headers: {} };
+        if (options.contentType) {
+            fetchOptions.headers['Content-Type'] = options.contentType;
+        } else {
+            fetchOptions.headers['Content-Type'] =
+                data instanceof ArrayBuffer ? 'application/octet-stream' : 'application/json';
+        }
+        if (this.token) fetchOptions.headers['Authorization'] = 'Bearer ' + this.token;
+        if (data) fetchOptions.body = data instanceof ArrayBuffer ? data : JSON.stringify(data);
         let url = path.indexOf('http') < 0 ? this.baseUrl + path : path;
-        fetch(url, options)
+        fetch(url, fetchOptions)
             .then(
                 res => {
                     success = res.ok;

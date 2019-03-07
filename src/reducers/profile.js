@@ -5,7 +5,10 @@ import {
     FETCH_USER_INFO_FAILURE,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
-    REGISTER_USER_FAILURE
+    REGISTER_USER_FAILURE,
+    UPLOAD_AVATAR_REQUEST,
+    UPLOAD_AVATAR_FAILURE,
+    UPLOAD_AVATAR_SUCCESS
 } from '../actions/profile';
 import {
     CREATE_GOAL_REQUEST,
@@ -47,6 +50,7 @@ export default function profile(state = {}, action) {
         case DELETE_GOAL_REQUEST:
         case PUBLISH_GOAL_REQUEST:
         case ADOPT_GOAL_REQUEST:
+        case UPLOAD_AVATAR_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true
             });
@@ -71,6 +75,7 @@ export default function profile(state = {}, action) {
         case DELETE_GOAL_FAILURE:
         case PUBLISH_GOAL_FAILURE:
         case ADOPT_GOAL_FAILURE:
+        case UPLOAD_AVATAR_FAILURE:
             return Object.assign({}, state, {
                 isFetching: false,
                 error: action.error
@@ -111,6 +116,11 @@ export default function profile(state = {}, action) {
                 isFetching: false,
                 error: null,
                 goals
+            });
+
+        case UPLOAD_AVATAR_SUCCESS:
+            return Object.assign({}, state, {
+                _links: { ...state._links, avatar: action.sourceUrl }
             });
 
         default:

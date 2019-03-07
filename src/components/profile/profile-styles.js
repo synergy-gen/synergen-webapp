@@ -3,7 +3,8 @@ export default theme => {
     return {
         avatar: {
             width: 150,
-            height: 150
+            height: 150,
+            marginTop: 10
         },
         viewSelectContainer: {
             marginTop: 10,

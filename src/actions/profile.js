@@ -67,3 +67,38 @@ export function fetchUserInfo(id) {
         });
     };
 }
+
+// Saving avatar
+export const UPLOAD_AVATAR_REQUEST = 'UPLOAD_AVATAR_REQUEST';
+function uploadAvatarRequest() {
+    return { type: UPLOAD_AVATAR_REQUEST };
+}
+
+export const UPLOAD_AVATAR_SUCCESS = 'UPLOAD_AVATAR_SUCCESS';
+function uploadAvatarSuccess(sourceUrl) {
+    return { type: UPLOAD_AVATAR_SUCCESS, sourceUrl };
+}
+
+export const UPLOAD_AVATAR_FAILURE = 'UPLOAD_AVATAR_FAILURE';
+function uploadAgatarFailure(error) {
+    return { type: UPLOAD_AVATAR_FAILURE, error };
+}
+
+export function uploadAvatar(rawData, mime) {
+    return function(dispatch, getState) {
+        dispatch(uploadAvatarRequest());
+
+        let id = getState().profile.id;
+
+        return new Promise((resolve, reject) => {
+            api.put(`/users/${id}/avatar`, rawData, { contentType: mime }, (err, res) => {
+                if (err) {
+                    dispatch(uploadAgatarFailure(err.message));
+                    return reject(err);
+                }
+                dispatch(uploadAvatarSuccess(res.content.location));
+                return resolve(res);
+            });
+        });
+    };
+}

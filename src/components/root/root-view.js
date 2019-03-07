@@ -13,6 +13,7 @@ import Explore from '../explore/explore-control';
 import Create from '../create/create-control';
 import View from '../view/view-control';
 import Edit from '../edit/edit-control';
+import Settings from '../settings/settings-control';
 import ProtectedRoute from '../auth/protected-route';
 
 class RootView extends React.Component {
@@ -98,6 +99,7 @@ class RootView extends React.Component {
                         <ProtectedRoute path={`${match.path}/create`} component={Create} />
                         <ProtectedRoute path={`${match.path}/view/:goalId`} component={View} />
                         <ProtectedRoute path={`${match.path}/edit/:entity/:entityId`} component={Edit} />
+                        <ProtectedRoute path={`${match.path}/settings`} component={Settings} />
                     </Switch>
                 </div>
                 <div className={classes.drawer}>
