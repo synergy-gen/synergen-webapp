@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import AvatarSetting from './avatar-control';
 import { Typography } from '@material-ui/core';
+import AvatarSetting from './avatar-control';
+import InformationSettings from './information-control';
 
 const styles = theme => ({
     root: {
@@ -21,14 +22,15 @@ class SettingsView extends Component {
     }
 
     render() {
-        const { classes, profileUserName } = this.props;
+        const { classes, profile } = this.props;
 
         return (
             <div className={classes.root}>
                 <Typography className={classes.title} variant="h4">
-                    Settings for {profileUserName}
+                    Settings for {profile.name}
                 </Typography>
                 <AvatarSetting />
+                <InformationSettings />
             </div>
         );
     }

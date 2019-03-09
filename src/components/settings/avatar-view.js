@@ -6,7 +6,9 @@ import { Avatar, Button, Typography } from '@material-ui/core';
 const styles = theme => ({
     root: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        margin: 5,
+        padding: 5
     },
     content: {
         padding: 5,

@@ -102,3 +102,31 @@ export function uploadAvatar(rawData, mime) {
         });
     };
 }
+
+// Updating user information
+export const UPDATE_USER_INFO_REQUEST = 'UPDATE_USER_INFO_REQUEST';
+const updateUserInfoRequest = () => ({ type: UPDATE_USER_INFO_REQUEST });
+
+export const UPDATE_USER_INFO_SUCCESS = 'UPDATE_USER_INFO_SUCCESS';
+const updateUserInfoSuccess = user => ({ type: UPDATE_USER_INFO_SUCCESS, user });
+
+export const UPDATE_USER_INFO_FAILURE = 'UPDATE_USER_INFO_FAILURE';
+const updateUserInfoFailure = error => ({ type: UPDATE_USER_INFO_FAILURE, error });
+
+export const updateUserInfo = info => (dispatch, getState) => {
+    dispatch(updateUserInfoRequest());
+
+    let uid = getState().profile.id;
+
+    return new Promise((resolve, reject) => {
+        api.patch(`/users/${uid}`, info, (err, res) => {
+            if (err) {
+                dispatch(updateUserInfoFailure(err.message));
+                return reject(err);
+            } else {
+                dispatch(updateUserInfoSuccess(res.content));
+                return resolve(res);
+            }
+        });
+    });
+};

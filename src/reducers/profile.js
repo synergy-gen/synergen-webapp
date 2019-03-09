@@ -8,7 +8,10 @@ import {
     REGISTER_USER_FAILURE,
     UPLOAD_AVATAR_REQUEST,
     UPLOAD_AVATAR_FAILURE,
-    UPLOAD_AVATAR_SUCCESS
+    UPLOAD_AVATAR_SUCCESS,
+    UPDATE_USER_INFO_REQUEST,
+    UPDATE_USER_INFO_SUCCESS,
+    UPDATE_USER_INFO_FAILURE
 } from '../actions/profile';
 import {
     CREATE_GOAL_REQUEST,
@@ -27,6 +30,7 @@ import {
     ADOPT_GOAL_SUCCESS,
     ADOPT_GOAL_FAILURE
 } from '../actions/goals';
+import { object } from 'prop-types';
 
 export default function profile(state = {}, action) {
     switch (action.type) {
@@ -51,12 +55,14 @@ export default function profile(state = {}, action) {
         case PUBLISH_GOAL_REQUEST:
         case ADOPT_GOAL_REQUEST:
         case UPLOAD_AVATAR_REQUEST:
+        case UPDATE_USER_INFO_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true
             });
 
         case FETCH_USER_INFO_SUCCESS:
         case REGISTER_USER_SUCCESS:
+        case UPDATE_USER_INFO_SUCCESS:
             var goals = {};
             action.user.goals.forEach(g => {
                 goals[g.id] = g;
@@ -76,6 +82,7 @@ export default function profile(state = {}, action) {
         case PUBLISH_GOAL_FAILURE:
         case ADOPT_GOAL_FAILURE:
         case UPLOAD_AVATAR_FAILURE:
+        case UPDATE_USER_INFO_FAILURE:
             return Object.assign({}, state, {
                 isFetching: false,
                 error: action.error
