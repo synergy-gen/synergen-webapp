@@ -28,9 +28,9 @@ class InformationSettingsView extends Component {
         const { profile } = this.props;
 
         this.state = {
-            name: profile.name,
-            email: profile.email,
-            slogan: profile.slogan,
+            name: profile.name || '',
+            email: profile.email || '',
+            slogan: profile.slogan || '',
             changed: false
         };
 

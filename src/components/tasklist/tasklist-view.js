@@ -2,30 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './tasklist-styles';
-import { AppBar, Toolbar, Divider, Paper, Typography, IconButton, Chip } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { AppBar, Toolbar, Paper, Typography } from '@material-ui/core';
 
-const TaskTile = ({ classes, task, onClear }) => (
-    <Paper className={classes.taskTile}>
-        <div className={classes.taskTileText}>
-            <Typography>{task.details}</Typography>
-        </div>
-        {/*<IconButton className={classes.taskTileClose} onClick={onClear}>
-            <CloseIcon />
-           </IconButton> */}
+const Goal = ({ classes, goal }) => (
+    <Paper className={classes.goal}>
+        <Typography className={classes.goalTitle}>{goal.title}</Typography>
+        {goal.tasks.map(t => (
+            <Task key={t.id} classes={classes} task={t} />
+        ))}
     </Paper>
 );
 
-const TaskTileChip = ({ classes, task, onClear }) => (
-    <Chip
-        className={classes.chip}
-        variant="outlined"
-        color="secondary"
-        label={task.title}
-        onDelete={() => {
-            onClear(task.id);
-        }}
-    />
+const Task = ({ classes, task }) => (
+    <div className={classes.task}>
+        <Typography>&middot;&nbsp;{task.details}</Typography>
+    </div>
 );
 
 class TasklistView extends React.Component {
@@ -34,10 +25,10 @@ class TasklistView extends React.Component {
     }
 
     render() {
-        const { classes, tasks, onTaskClear } = this.props;
+        const { classes, goals } = this.props;
 
         return (
-            <React.Fragment>
+            <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h6" className={classes.darkText}>
@@ -45,10 +36,10 @@ class TasklistView extends React.Component {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                {tasks.map(task => (
-                    <TaskTile key={task.id} classes={classes} task={task} onClear={onTaskClear} />
+                {goals.map(goal => (
+                    <Goal key={goal.id} classes={classes} goal={goal} />
                 ))}
-            </React.Fragment>
+            </div>
         );
     }
 }

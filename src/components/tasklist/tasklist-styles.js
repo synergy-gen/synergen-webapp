@@ -1,31 +1,33 @@
 export default theme => ({
     root: {
-        position: 'relative'
+        position: 'relative',
+        overflowY: 'scroll',
+        scrollbarWidth: 'none',
+        '-ms-overflow-style': 'none',
+        '&::-webkit-scrollbar': {
+            width: 0,
+            height: 0
+        }
     },
-    taskTile: {
+    goal: {
         padding: 6,
         margin: 5,
         marginRight: 8,
         backgroundColor: theme.palette.background.default,
         display: 'flex',
-        alignItems: 'center'
-    },
-    darkText: {
-        color: theme.palette.primary.contrastText
-    },
-    taskTileText: {
-        display: 'flex',
         flexDirection: 'column'
     },
-    taskTileClose: {
-        marginLeft: 'auto'
+    goalTitle: {
+        borderBottom: '1px solid #ccc',
+        fontWeight: 'bold'
     },
     toolbar: {
         ...theme.mixins.toolbar
     },
-    chip: {
-        margin: 4,
-        display: 'flex',
-        justifyContent: 'space-between'
+    task: {
+        marginTop: 3
+    },
+    darkText: {
+        color: theme.palette.primary.contrastText
     }
 });

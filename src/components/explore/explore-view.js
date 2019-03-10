@@ -40,8 +40,9 @@ class ExploreView extends React.Component {
                     className={classes.input}
                     placeholder="Search Synergen"
                     onChange={this.handleSearchChange}
+                    autoFocus={true}
                 />
-                <IconButton className={classes.iconButton} aria-label="Search">
+                <IconButton className={classes.iconButton} aria-label="Search" onClick={this.handleSearch}>
                     <SearchIcon />
                 </IconButton>
             </Paper>
