@@ -67,7 +67,7 @@ class AvatarSettingView extends Component {
     }
 
     onClearAvatar() {
-        this.setState({ src: '/assets/img/no-avatar.png', file: null });
+        this.setState({ src: 'assets/img/no-avatar.png', file: null });
         if (this.buttonUploadNew.current) this.buttonUploadNew.current.value = '';
         if (this.buttonUpload.current) this.buttonUpload.current.value = '';
     }

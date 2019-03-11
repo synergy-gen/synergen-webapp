@@ -5,8 +5,8 @@ const mapStateToProps = state => {
     return {
         user: state.profile,
         avatar: state.profile._links
-            ? state.profile._links.avatar || '/assets/img/no-avatar.png'
-            : '/assets/img/no-avatar.png'
+            ? state.profile._links.avatar || 'assets/img/no-avatar.png'
+            : 'assets/img/no-avatar.png'
     };
 };
 
