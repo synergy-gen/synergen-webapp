@@ -37,7 +37,7 @@ class AvatarSettingView extends Component {
         super(props);
 
         this.state = {
-            src: props.src ? props.src : '/assets/img/no-avatar.png',
+            src: props.src ? props.src : 'assets/img/no-avatar.png',
             file: null
         };
 
