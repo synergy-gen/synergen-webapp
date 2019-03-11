@@ -11,7 +11,8 @@ import {
     Typography,
     Button,
     CircularProgress,
-    CardActions
+    CardActions,
+    Avatar
 } from '@material-ui/core';
 
 const SummaryCard = ({ classes, title, description, creator, completed, image, viewPath }) => (
@@ -19,7 +20,15 @@ const SummaryCard = ({ classes, title, description, creator, completed, image, v
         <Card className={classes.summaryCard}>
             <CardHeader
                 className={classes.summaryCardHeader}
-                avatar={completed ? <CircularProgress variant="static" value={data.completed} /> : image ? '' : ''}
+                avatar={
+                    completed ? (
+                        <CircularProgress variant="static" value={data.completed} />
+                    ) : image ? (
+                        <Avatar src={image} />
+                    ) : (
+                        ''
+                    )
+                }
                 title={<Typography variant="h6">{title}</Typography>}
                 subheader={'@' + creator}
             />

@@ -15,8 +15,10 @@ import {
     Toolbar
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import BackArrowIcon from '@material-ui/icons/ArrowBack';
 import moment from 'moment';
+import Dialog from '../dialog-box/dialog-view';
 
 const TaskRow = ({ classes, task }) => (
     <TableRow>
@@ -27,10 +29,32 @@ const TaskRow = ({ classes, task }) => (
 class ViewView extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            dialogOpen: false
+        };
+
+        this.handleOpenDialog = this.handleOpenDialog.bind(this);
+        this.handleCloseDialog = this.handleCloseDialog.bind(this);
+        this.onDeleteGoal = this.onDeleteGoal.bind(this);
+    }
+
+    onDeleteGoal() {
+        const { onDelete, goal } = this.props;
+        onDelete(goal);
+    }
+
+    handleOpenDialog() {
+        this.setState({ dialogOpen: true });
+    }
+
+    handleCloseDialog() {
+        this.setState({ dialogOpen: false });
     }
 
     render() {
-        const { classes, goal, userIsOwner, match } = this.props;
+        const { classes, goal, userIsOwner } = this.props;
+        if (!goal) return <div />;
         return (
             <React.Fragment>
                 <AppBar className={classes.appBar} position="static">
@@ -51,7 +75,18 @@ class ViewView extends React.Component {
                                     </IconButton>
                                 </Link>
                             ) : (
-                                ''
+                                <React.Fragment>
+                                    <IconButton className={classes.toolbarButton} onClick={this.handleOpenDialog}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                    <Dialog
+                                        open={this.state.dialogOpen}
+                                        title="Delete Goal?"
+                                        message="Are you sure you want to delete this goal?"
+                                        onConfirm={this.onDeleteGoal}
+                                        onClose={this.handleCloseDialog}
+                                    />
+                                </React.Fragment>
                             )}
                         </div>
                     </Toolbar>

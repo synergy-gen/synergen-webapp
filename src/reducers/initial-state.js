@@ -13,6 +13,6 @@ export default {
         isFetching: false,
         error: null,
         query: '',
-        results: []
+        results: null
     }
 };
